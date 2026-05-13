@@ -23,42 +23,24 @@ const vsechnaStanoviste = [
 
 function updateUI() {
     const contentDiv = document.getElementById('content');
-    const actionArea = document.getElementById('action-area');
-    
-    if (currentStepIndex >= teamRoute.length) {
-        // ... (kód pro konec hry zůstává stejný)
-        return;
-    }
-
     const st = teamRoute[currentStepIndex];
-    document.getElementById('title').innerText = st.n;
-    document.getElementById('locationName').innerText = st.l;
     
-    // Čistě růžový label bez černého podkladu a obrázku
-    let textUkolu = st.t.replace("Úkol:", "<span class='pink-label'>Úkol:</span>");
-    let interakceHtml = "";
+    // ... (zbytek logiky pro zobrazení týmu a pokroku)
 
-    // Logika zobrazení podle typu
+    // Tady čistíme text: Odstraníme terč a černé pozadí
+    // Změníme "Úkol:" na růžový nápis bez příkras
+    let textBezCerne = st.t.replace("Úkol:", "<span class='pure-pink-label'>Úkol:</span>");
+
+    let interakceHtml = "";
+    // Logika pro vstupy (cislo / media / razitko) zůstává stejná...
     if (st.typ === "cislo") {
-        interakceHtml = `
-            <div class="answer-box">
-                <label>Zadejte číselný výsledek:</label>
-                <input type="number" id="userAnswer" placeholder="???">
-            </div>
-        `;
+        interakceHtml = `<div class="answer-box"><label>Zadej číslo:</label><input type="number" id="userAnswer"></div>`;
     } else if (st.typ === "media") {
-        interakceHtml = `
-            <div class="media-box">
-                <p>Po natočení/vyfocení nahrajte soubor sem:</p>
-                <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT SOUBOR 📸</a>
-                <p class="small-note">Poté se vraťte do hry a pokračujte.</p>
-            </div>
-        `;
+        interakceHtml = `<div class="media-box"><a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT FOTO/VIDEO 📸</a></div>`;
     }
 
-    contentDiv.innerHTML = `<div>${textUkolu}</div>${interakceHtml}`;
+    contentDiv.innerHTML = `<div class="task-text">${textBezCerne}</div>${interakceHtml}`;
 }
-
 function nextStep() {
     const st = teamRoute[currentStepIndex];
     

@@ -77,3 +77,25 @@
     border: 3px solid var(--black);
     border-radius: 20px;
 }
+
+/* Totální očista - jen růžový text */
+.pure-pink-label {
+    color: #ff007f !important; /* Tvá růžová */
+    background: none !important; /* Žádné černé pozadí */
+    padding: 0 !important;
+    margin: 0 !important;
+    font-weight: 900;
+    text-transform: uppercase;
+    display: inline; /* Aby to neházelo na nový řádek, pokud nechceš */
+}
+
+/* Úprava celého bloku textu úkolu */
+.task-text {
+    color: #000; /* Samotný zbytek textu úkolu bude černý pro čitelnost */
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* Pokud tam pořád vidíš ten obrázek, je to tím, že v JS kódu byla 
+   asi nějaká emoji ikona (target 🎯). Ten kód nahoře ji ignoruje. */

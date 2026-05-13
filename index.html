@@ -7,12 +7,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>💰 Finanční hra: Praha</h1>
-        <p>Vítejte u městské hry. Zadejte číslo vašeho týmu, které vám přidělil instruktor.</p>
-        
-        <input type="number" id="teamInput" placeholder="Číslo týmu (např. 1)">
-        <button onclick="startHry()" class="btn-main">Spustit hru</button>
+    <div class="container main-start">
+        <div class="card">
+            <h1>💸 Finanční hra: Praha</h1>
+            <p>Vítejte v městské hře zaměřené na svět financí. Jste připraveni ovládnout pražskou burzu i směnárny?</p>
+            
+            <div class="input-group">
+                <label for="teamInput">Zadejte číslo vašeho týmu</label>
+                <input type="number" id="teamInput" placeholder="např. 1" min="1">
+            </div>
+            
+            <button onclick="startHry()" class="btn-main">VYRAZIT DO TERÉNU</button>
+        </div>
     </div>
 
     <script>
@@ -21,7 +27,7 @@
             if (teamId > 0) {
                 window.location.href = `hra.html?team=${teamId}`;
             } else {
-                alert("Zadejte platné číslo týmu!");
+                alert("Prosím zadejte platné číslo týmu!");
             }
         }
     </script>

@@ -1,1 +1,28 @@
 
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Průběh hry</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        Tým č. <span id="displayTeamId">?</span> | Stanoviště: <span id="currentStep">1</span>/8
+    </div>
+
+    <div class="container">
+        <h2 id="title">Načítání...</h2>
+        <div id="content" class="task-box">
+            </div>
+
+        <div id="action-area">
+            <p><strong>Úkol splněn?</strong> Zapište výsledek do bločku a potvrďte zde:</p>
+            <button onclick="nextStep()" class="btn-next">Další stanoviště →</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

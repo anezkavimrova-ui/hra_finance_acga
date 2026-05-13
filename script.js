@@ -23,23 +23,39 @@ const vsechnaStanoviste = [
 
 function updateUI() {
     const contentDiv = document.getElementById('content');
-    const st = teamRoute[currentStepIndex];
-    
-    // ... (zbytek logiky pro zobrazení týmu a pokroku)
+    const actionArea = document.getElementById('action-area');
+    const progressBar = document.getElementById('progressBar');
 
-    // Tady čistíme text: Odstraníme terč a černé pozadí
-    // Změníme "Úkol:" na růžový nápis bez příkras
-    let textBezCerne = st.t.replace("Úkol:", "<span class='pure-pink-label'>Úkol:</span>");
-
-    let interakceHtml = "";
-    // Logika pro vstupy (cislo / media / razitko) zůstává stejná...
-    if (st.typ === "cislo") {
-        interakceHtml = `<div class="answer-box"><label>Zadej číslo:</label><input type="number" id="userAnswer"></div>`;
-    } else if (st.typ === "media") {
-        interakceHtml = `<div class="media-box"><a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT FOTO/VIDEO 📸</a></div>`;
+    if (currentStepIndex >= teamRoute.length) {
+        document.getElementById('locationName').innerText = "CÍL";
+        document.getElementById('title').innerText = "HOTOVO! 🏆";
+        contentDiv.innerHTML = "<p>Skvělá práce! Vraťte se na základnu.</p>";
+        if(actionArea) actionArea.style.display = "none";
+        return;
     }
 
-    contentDiv.innerHTML = `<div class="task-text">${textBezCerne}</div>${interakceHtml}`;
+    const st = teamRoute[currentStepIndex];
+    
+    // Update textů
+    document.getElementById('displayTeamId').innerText = teamId;
+    document.getElementById('currentStep').innerText = currentStepIndex + 1;
+    document.getElementById('locationName').innerText = st.l;
+    document.getElementById('title').innerText = st.n;
+    
+    // TADY JE TA ZMĚNA: Žádné emoji, žádné černé pozadí, jen růžová třída
+    let cistyText = st.t.replace("Úkol:", "<span class='ukol-ruzove'>Úkol:</span>");
+    
+    let interakceHtml = "";
+    if (st.typ === "cislo") {
+        interakceHtml = `<div class="answer-box"><label>Zadej výsledek:</label><input type="number" id="userAnswer"></div>`;
+    } else if (st.typ === "media") {
+        interakceHtml = `<div class="media-box"><a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT SOUBOR</a></div>`;
+    }
+
+    contentDiv.innerHTML = `<div class="task-description">${cistyText}</div>${interakceHtml}`;
+    
+    let progressPercent = ((currentStepIndex) / teamRoute.length) * 100;
+    if(progressBar) progressBar.style.width = progressPercent + "%";
 }
 function nextStep() {
     const st = teamRoute[currentStepIndex];

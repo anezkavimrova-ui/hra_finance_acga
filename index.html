@@ -3,113 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanční hra Praha | Amazon</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Finanční hra: Praha | Gymnázium Amazon</title>
     <style>
-        .main-start {
+        /* Definice základních barev - Neon Růžová a Tyrkysová */
+        :root {
+            --pink: #ff007f;
+            --turquoise: #00f2ff;
+            --black: #000000;
+            --white: #ffffff;
+            --dark-grey: #1a1a1a;
+            --glass: rgba(0, 0, 0, 0.85);
+        }
+
+        /* Celkové nastavení těla - Tmavé pozadí */
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            background-color: var(--black);
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 100%);
+            color: var(--white);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            background: #000;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
             padding: 20px;
-        }
-
-        .card-start {
-            background: rgba(0, 0, 0, 0.9) !important;
-            border: 3px solid var(--turquoise) !important;
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2) !important;
-            text-align: center;
-            padding: 40px 25px !important;
-            border-radius: 20px;
+            max-width: 500px;
             width: 100%;
-            max-width: 450px;
         }
 
-        .logo-container {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
+        /* Karta pro úvodní stranu - Neonové ohraničení */
+        .card-start {
+            background: var(--glass);
+            color: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid var(--turquoise);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4), inset 0 0 15px rgba(0, 242, 255, 0.2);
+            text-align: center;
+            backdrop-filter: blur(5px); /* Jemné rozostření pozadí pro "skleněný" efekt */
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sekce pro logo - Integrováno s neonovým efektem */
+        .logo-section {
             margin-bottom: 25px;
-            display: inline-block;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
-        .logo-container img {
-            max-width: 180px;
+        .logo-image {
+            max-width: 200px;
             height: auto;
-            display: block;
+            /* Tyrkysové záření pro logo */
+            filter: drop-shadow(0 0 8px var(--turquoise));
+            animation: logoGlow 3s infinite alternate;
         }
 
-        .school-info {
-            color: var(--turquoise);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            font-weight: bold;
+        @logoGlow {
+            0% { filter: drop-shadow(0 0 5px var(--turquoise)); }
+            100% { filter: drop-shadow(0 0 15px var(--turquoise)); }
         }
 
+        /* Nadpisy s neonovým efektem */
         h1.neon-title {
-            color: var(--white) !important;
-            text-shadow: 0 0 10px var(--pink), 0 0 20px var(--pink);
+            color: var(--white);
             font-size: 2.2rem;
             margin: 10px 0 25px 0;
-            line-height: 1.1;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* Růžové neonové záření */
+            text-shadow: 0 0 10px var(--pink), 0 0 20px var(--pink), 0 0 40px var(--pink);
         }
 
+        /* Informační text o Amazonu - Tyrkysový */
+        .school-info {
+            color: var(--turquoise);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px var(--turquoise);
+        }
+
+        /* Popis hry - Čitelný, s jemným růžovým nádechem */
         .description {
             color: #ddd;
-            font-size: 0.95rem;
+            font-size: 1rem;
             margin-bottom: 30px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
-        .input-group label {
-            color: var(--white);
+        strong {
+            color: var(--pink);
+            text-shadow: 0 0 5px var(--pink);
+        }
+
+        /* Sekce pro vstup - Tyrkysové detaily */
+        .input-group {
+            margin: 30px 0;
+        }
+
+        label.input-label {
             display: block;
-            margin-bottom: 12px;
             font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--turquoise);
+            text-shadow: 0 0 5px var(--turquoise);
         }
 
-        #teamInput {
-            background: #000;
-            border: 2px solid var(--pink) !important;
-            color: var(--white);
-            font-size: 1.8rem;
-            padding: 10px;
-            width: 100px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
-        }
-
-        .btn-start {
-            background: var(--pink) !important;
-            color: white !important;
-            border: none !important;
-            box-shadow: 0 0 25px var(--pink) !important;
-            margin-top: 30px;
-            padding: 20px !important;
-            font-size: 1.3rem !important;
+        input[type="number"] {
             width: 100%;
-            cursor: pointer;
-            font-weight: 900;
+            padding: 15px;
+            background-color: var(--black);
+            border: 2px solid var(--pink);
             border-radius: 12px;
-            transition: 0.3s;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: var(--pink);
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+            transition: all 0.3s;
         }
 
-        .btn-start:hover {
-            transform: scale(1.03);
-            filter: brightness(1.1);
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--turquoise);
+            color: var(--turquoise);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
         }
+
+        /* Tlačítko - Růžová s neonovým efektem a černými detaily při kliknutí */
+        .btn-main, .btn-start {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--pink), #b21f1f);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
+            margin-top: 10px;
+        }
+
+        .btn-main:active {
+            transform: scale(0.95);
+            /* Černé detaily při kliknutí */
+            background: var(--black);
+            color: var(--pink);
+            border: 2px solid var(--pink);
+            box-shadow: inset 0 0 10px rgba(255, 0, 127, 0.5);
+        }
+
+        .btn-main:hover {
+            box-shadow: 0 5px 25px rgba(255, 0, 127, 0.7);
+        }
+
+        /* Ikony a další detaily */
+        .input-label span.pink-icon {
+            color: var(--pink);
+            margin-right: 5px;
+            font-size: 1.2rem;
+        }
+
+        .helper-text {
+            text-align: center;
+            color: var(--turquoise);
+            font-size: 0.8rem;
+            margin-top: 15px;
+            opacity: 0.8;
+            text-shadow: 0 0 3px var(--turquoise);
+        }
+
     </style>
 </head>
 <body>
-    <div class="main-start">
+    <div class="container">
         <div class="card-start">
-            <div class="logo-container">
-                <img src="https://www.gymnazium-amazon.cz/mw1/themes/1/logo2018.png" alt="Gymnázium Amazon Logo">
+            <div class="logo-section">
+                <img src="https://www.gymnazium-amazon.cz/mw1/themes/1/logo2018.png" alt="Gymnázium Amazon Logo" class="logo-image">
             </div>
 
             <p class="school-info">Anglicko-české gymnázium AMAZON</p>
@@ -117,26 +204,32 @@
             <h1 class="neon-title">FINANČNÍ HRA<br>PRAHA</h1>
             
             <p class="description">
-                Tato hra vznikla v rámci finančního vzdělávání na naší škole. 
-                Připravte se na misi v centru metropole!
+                Tato hra vznikla v rámci finančního vzdělávání na <strong>Gymnáziu AMAZON</strong>. 
+                Připravte se na neonovou misi v ulicích metropole a ovládněte svět peněz!
             </p>
             
             <div class="input-group">
-                <label for="teamInput">Zadejte číslo týmu</label>
+                <label for="teamInput" class="input-label"><span class="pink-icon">💎</span>Zadejte číslo vašeho týmu</label>
                 <input type="number" id="teamInput" placeholder="?" min="1">
             </div>
             
-            <button onclick="startHry()" class="btn-start">SPUSTIT MISI</button>
+            <button onclick="startHry()" class="btn-main btn-start">VYRAZIT DO TERÉNU →</button>
+            
+            <p class="helper-text">Systém čeká na vaše ID pro vygenerování trasy...</p>
         </div>
     </div>
 
     <script>
+        // JavaScript funkce pro spuštění hry
         function startHry() {
             const teamId = document.getElementById('teamInput').value;
+            // Kontrola, zda bylo zadáno platné číslo týmu
             if (teamId > 0) {
+                // Přesměrování na hlavní herní stránku s ID týmu v URL
                 window.location.href = `hra.html?team=${teamId}`;
             } else {
-                alert("SYSTÉM: Zadejte platné číslo týmu!");
+                // Upozornění v případě chyby, s růžovým detailem v textu
+                alert("SYSTÉM: Zadejte platné identifikační číslo týmu pro spuštění mise!");
             }
         }
     </script>

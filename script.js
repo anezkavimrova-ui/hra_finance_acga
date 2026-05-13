@@ -1,13 +1,85 @@
 const vsechnaStanoviste = [
-    { n: "Česká národní banka", l: "Na Příkopě 28", t: "Jděte do návštěvnického centra. Úkol: Spočítejte počet vajec ve 4. sloupci zleva. Razítko do bločku!" },
-    { n: "Česká minovna", l: "Havířská 3", t: "Najděte největší minci ve výloze. Zjistěte její název a hodnotu." },
-    { n: "Česká pojišťovna", l: "Spálená 75/16", t: "Najděte úhoře. Natočte reportáž o historii budovy a úhořích." },
-    { n: "Komerční banka", l: "Pobočka centrum", t: "Zjistěte, co lidé řeší na pobočce a co nejde v aplikaci. Razítko do bločku!" },
-    { n: "Burza drahých kovů", l: "Centrum", t: "Porovnejte cenu zlata ve výloze s cenou na světové burze v mobilu." },
-    { n: "Směnárny - Statistika", l: "Karlova ulice", t: "Zpracujte 5 směnáren. Vypočítejte průměr, min, max a nakreslete graf do bločku." },
-    { n: "Neviditelná daň", l: "Potraviny/Večerka", t: "Najděte produkt s 12% a 21% DPH (např. jídlo vs alkohol). Vypočítejte daň pro stát." },
-    { n: "Pařížská ulice", l: "U luxusních butiků", t: "Najděte nejdražší kousek. Vypočítejte, kolik let by na něj vydělával učitel (35k čistého)." }
+    { 
+        n: "Česká národní banka", 
+        l: "Na Příkopě 28", 
+        t: "Úkol: Spočítejte počet vajec ve 4. sloupci zleva.",
+        typ: "cislo",
+        reseni: 12 // Doplňte správné číslo
+    },
+    { 
+        n: "Česká pojišťovna (Úhoři)", 
+        l: "Spálená", 
+        t: "Úkol: Natočte reportáž o historii budovy a o tom, proč jsou tu úhoři. Video nahrajte přes tlačítko níže.",
+        typ: "media",
+        link: "https://photos.app.goo.gl/vase-album" // Odkaz na váš Google Drive/Photos
+    },
+    { 
+        n: "Komerční banka", 
+        l: "Pobočka v centru", 
+        t: "Úkol: Zjistěte, co lidé řeší na pobočce. Nechte si dát razítko do bločku.",
+        typ: "razitko"
+    }
 ];
+
+function updateUI() {
+    const contentDiv = document.getElementById('content');
+    const actionArea = document.getElementById('action-area');
+    
+    if (currentStepIndex >= teamRoute.length) {
+        // ... (kód pro konec hry zůstává stejný)
+        return;
+    }
+
+    const st = teamRoute[currentStepIndex];
+    document.getElementById('title').innerText = st.n;
+    document.getElementById('locationName').innerText = st.l;
+    
+    // Čistě růžový label bez černého podkladu a obrázku
+    let textUkolu = st.t.replace("Úkol:", "<span class='pink-label'>Úkol:</span>");
+    let interakceHtml = "";
+
+    // Logika zobrazení podle typu
+    if (st.typ === "cislo") {
+        interakceHtml = `
+            <div class="answer-box">
+                <label>Zadejte číselný výsledek:</label>
+                <input type="number" id="userAnswer" placeholder="???">
+            </div>
+        `;
+    } else if (st.typ === "media") {
+        interakceHtml = `
+            <div class="media-box">
+                <p>Po natočení/vyfocení nahrajte soubor sem:</p>
+                <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT SOUBOR 📸</a>
+                <p class="small-note">Poté se vraťte do hry a pokračujte.</p>
+            </div>
+        `;
+    }
+
+    contentDiv.innerHTML = `<div>${textUkolu}</div>${interakceHtml}`;
+}
+
+function nextStep() {
+    const st = teamRoute[currentStepIndex];
+    
+    // Kontrola číselné odpovědi
+    if (st.typ === "cislo") {
+        const userVal = document.getElementById('userAnswer').value;
+        if (parseInt(userVal) !== st.reseni) {
+            alert("❌ Špatný výsledek! Zkuste to znovu.");
+            return;
+        }
+    }
+
+    // Kontrola nahrání (pouze potvrzovací dotaz)
+    if (st.typ === "media") {
+        if (!confirm("Máte soubor úspěšně nahraný v albu?")) return;
+    }
+
+    currentStepIndex++;
+    updateUI();
+    window.scrollTo(0,0);
+};
 
 let currentStepIndex = 0;
 let teamRoute = [];

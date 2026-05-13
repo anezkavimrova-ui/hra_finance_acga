@@ -3,21 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanční hra Praha - Start</title>
+    <title>Finanční hra Praha | Amazon</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .main-start {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #000;
+            padding: 20px;
+        }
+
+        .card-start {
+            background: rgba(0, 0, 0, 0.9) !important;
+            border: 3px solid var(--turquoise) !important;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2) !important;
+            text-align: center;
+            padding: 40px 25px !important;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .logo-container {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .logo-container img {
+            max-width: 180px;
+            height: auto;
+            display: block;
+        }
+
+        .school-info {
+            color: var(--turquoise);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        h1.neon-title {
+            color: var(--white) !important;
+            text-shadow: 0 0 10px var(--pink), 0 0 20px var(--pink);
+            font-size: 2.2rem;
+            margin: 10px 0 25px 0;
+            line-height: 1.1;
+        }
+
+        .description {
+            color: #ddd;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .input-group label {
+            color: var(--white);
+            display: block;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        #teamInput {
+            background: #000;
+            border: 2px solid var(--pink) !important;
+            color: var(--white);
+            font-size: 1.8rem;
+            padding: 10px;
+            width: 100px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
+        }
+
+        .btn-start {
+            background: var(--pink) !important;
+            color: white !important;
+            border: none !important;
+            box-shadow: 0 0 25px var(--pink) !important;
+            margin-top: 30px;
+            padding: 20px !important;
+            font-size: 1.3rem !important;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 900;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .btn-start:hover {
+            transform: scale(1.03);
+            filter: brightness(1.1);
+        }
+    </style>
 </head>
 <body>
-    <div class="container main-start">
-        <div class="card">
-            <h1>💸 Finanční hra: Praha</h1>
-            <p>Vítejte v městské hře zaměřené na svět financí. Jste připraveni ovládnout pražskou burzu i směnárny?</p>
+    <div class="main-start">
+        <div class="card-start">
+            <div class="logo-container">
+                <img src="https://www.gymnazium-amazon.cz/mw1/themes/1/logo2018.png" alt="Gymnázium Amazon Logo">
+            </div>
+
+            <p class="school-info">Anglicko-české gymnázium AMAZON</p>
+            
+            <h1 class="neon-title">FINANČNÍ HRA<br>PRAHA</h1>
+            
+            <p class="description">
+                Tato hra vznikla v rámci finančního vzdělávání na naší škole. 
+                Připravte se na misi v centru metropole!
+            </p>
             
             <div class="input-group">
-                <label for="teamInput">Zadejte číslo vašeho týmu</label>
-                <input type="number" id="teamInput" placeholder="např. 1" min="1">
+                <label for="teamInput">Zadejte číslo týmu</label>
+                <input type="number" id="teamInput" placeholder="?" min="1">
             </div>
             
-            <button onclick="startHry()" class="btn-main">VYRAZIT DO TERÉNU</button>
+            <button onclick="startHry()" class="btn-start">SPUSTIT MISI</button>
         </div>
     </div>
 
@@ -27,7 +136,7 @@
             if (teamId > 0) {
                 window.location.href = `hra.html?team=${teamId}`;
             } else {
-                alert("Prosím zadejte platné číslo týmu!");
+                alert("SYSTÉM: Zadejte platné číslo týmu!");
             }
         }
     </script>

@@ -1,55 +1,160 @@
-/* Odstranění černého zvýraznění a obrázku */
-.pink-label {
-    color: var(--pink);
-    font-weight: 900;
-    text-transform: uppercase;
-    display: block; /* Dá úkol na nový řádek */
-    margin-bottom: 5px;
+/* DEFINICE BAREV - Ladí s tvým indexem */
+:root {
+    --pink: #ff007f;
+    --turquoise: #00f2ff;
+    --black: #000000;
+    --white: #ffffff;
+    --grey: #f4f4f4;
 }
 
-/* Pole pro zadání odpovědi na stanovišti */
-.answer-box {
-    margin: 20px 0;
+/* ZÁKLADNÍ NASTAVENÍ */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Arial Black', Gadget, sans-serif;
+    margin: 0;
+    /* Růžovo-tyrkysový přechod jako na indexu */
+    background: linear-gradient(135deg, var(--turquoise) 0%, var(--pink) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HORNÍ LIŠTA (Černé detaily) */
+.header {
+    background: var(--black);
+    color: var(--turquoise);
     padding: 15px;
+    text-align: center;
+    border-bottom: 4px solid var(--pink);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* PROGRESS BAR */
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: #333;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--turquoise);
+    width: 0%; /* Ovládáno JavaScriptem */
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px var(--turquoise);
+}
+
+/* HLAVNÍ KONTEJNER */
+.container {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* KARTA S ÚKOLEM */
+.task-card {
+    background: var(--white);
+    border: 4px solid var(--black);
+    border-radius: 25px;
+    padding: 25px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 10px 10px 0px var(--black);
+    text-align: center;
+}
+
+/* LOKALITA (Růžový štítek) */
+.location-tag {
+    background: var(--pink);
+    color: var(--white);
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    margin-bottom: 15px;
+    border: 2px solid var(--black);
+    text-transform: uppercase;
+}
+
+h2 {
+    color: var(--black);
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* TEXT ÚKOLU - Čistý bez černých boxů */
+.task-description {
+    color: var(--black);
+    font-size: 1.05rem;
+    line-height: 1.4;
+    margin-bottom: 25px;
+    text-align: left;
+    font-family: Arial, sans-serif; /* Pro čitelnost textu */
+}
+
+/* OPRAVA: Úkol: jen růžově, žádné pozadí, žádné emoji */
+.ukol-ruzove {
+    color: var(--pink) !important;
+    background: transparent !important;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 0 !important;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+/* BOX PRO ČÍSELNOU ODPOVĚĎ */
+.answer-box {
     background: var(--turquoise);
     border: 3px solid var(--black);
-    border-radius: 15px;
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 
 .answer-box label {
     display: block;
-    font-size: 0.8rem;
     color: var(--black);
-    margin-bottom: 5px;
+    font-size: 0.7rem;
+    margin-bottom: 8px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .answer-box input {
     width: 100%;
-    padding: 10px;
     border: 2px solid var(--black);
-    border-radius: 8px;
-    font-size: 1.5rem;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.8rem;
     text-align: center;
-    font-weight: bold;
-}
-/* Růžový label bez černého pozadí */
-.pink-label {
-    color: var(--pink);
-    font-weight: 900;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
+    font-family: 'Arial Black', sans-serif;
+    background: var(--white);
 }
 
-/* Box pro nahrávání médií */
+/* BOX PRO NAHRÁVÁNÍ MÉDIÍ */
 .media-box {
-    margin: 20px 0;
-    padding: 15px;
     border: 3px dashed var(--pink);
-    border-radius: 15px;
-    text-align: center;
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #fff0f6;
+}
+
+.media-box p {
+    color: var(--black);
+    font-size: 0.8rem;
+    margin-bottom: 10px;
 }
 
 .btn-upload {
@@ -59,45 +164,39 @@
     padding: 12px 20px;
     text-decoration: none;
     border-radius: 50px;
+    font-size: 0.9rem;
     font-weight: bold;
-    margin: 10px 0;
     border: 2px solid var(--turquoise);
+    transition: 0.2s;
 }
 
-.small-note {
-    font-size: 0.7rem;
-    color: #666;
-}
-
-/* Úprava answer-boxu pro číselné odpovědi */
-.answer-box {
-    margin: 20px 0;
-    padding: 15px;
-    background: var(--turquoise);
+/* TLAČÍTKO DALŠÍ */
+.btn-next {
+    background: var(--pink);
+    color: var(--white);
     border: 3px solid var(--black);
-    border-radius: 20px;
-}
-
-/* Totální očista - jen růžový text */
-.pure-pink-label {
-    color: #ff007f !important; /* Tvá růžová */
-    background: none !important; /* Žádné černé pozadí */
-    padding: 0 !important;
-    margin: 0 !important;
-    font-weight: 900;
+    border-radius: 50px;
+    padding: 18px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
     text-transform: uppercase;
-    display: inline; /* Aby to neházelo na nový řádek, pokud nechceš */
+    box-shadow: 5px 5px 0px var(--black);
+    transition: 0.1s;
 }
 
-/* Úprava celého bloku textu úkolu */
-.task-text {
-    color: #000; /* Samotný zbytek textu úkolu bude černý pro čitelnost */
-    font-size: 1.1rem;
-    line-height: 1.5;
-    text-align: left;
+.btn-next:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--black);
 }
 
-/* Pokud tam pořád vidíš ten obrázek, je to tím, že v JS kódu byla 
-   asi nějaká emoji ikona (target 🎯). Ten kód nahoře ji ignoruje. */
-/* Pokud tam pořád vidíš ten obrázek, je to tím, že v JS kódu byla 
-   asi nějaká emoji ikona (target 🎯). Ten kód nahoře ji ignoruje. */
+/* PATIČKA GYMNÁZIA */
+.school-footer {
+    margin-top: 20px;
+    font-size: 0.6rem;
+    color: var(--black);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

@@ -1,26 +1,37 @@
-
 <!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Průběh hry</title>
+    <title>Průběh hry: Finanční Praha</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="header">
-        Tým č. <span id="displayTeamId">?</span> | Stanoviště: <span id="currentStep">1</span>/8
+        <div class="header-content">
+            <span class="badge-team">Tým #<span id="displayTeamId">?</span></span>
+            <span class="progress-text">Stanoviště <span id="currentStep">1</span> z 8</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
     </div>
 
     <div class="container">
-        <h2 id="title">Načítání...</h2>
-        <div id="content" class="task-box">
+        <div class="task-card">
+            <div class="location-badge">📍 <span id="locationName">Načítání...</span></div>
+            <h2 id="title">Hledám zadání...</h2>
+            
+            <div id="content" class="task-content">
+                <!-- Dynamický obsah -->
             </div>
+        </div>
 
         <div id="action-area">
-            <p><strong>Úkol splněn?</strong> Zapište výsledek do bločku a potvrďte zde:</p>
-            <button onclick="nextStep()" class="btn-next">Další stanoviště →</button>
+            <button onclick="nextStep()" class="btn-next">SPLNĚNO & DALŠÍ ÚKOL</button>
         </div>
+        
+        <p class="helper-text">Nezapomeňte zapsat výsledek a získat razítko do bločku!</p>
     </div>
 
     <script src="script.js"></script>

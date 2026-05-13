@@ -1,3 +1,454 @@
+Gemini
+Návrh webové hry pro finanční hru
+Logo Enterprise
+Konverzace s Gemini
+hele děláme teď městskou hru v Praze na téma finance. máme zatím tyto stanoviště, chceme k tomu udělat webovou stránku, která studenty hrou provede. vždycky po stanovištích. ideálně chceme týmy, který každý budou mít jinou trasu po stanovištích. šlo by to tedy nějak udělat, aby každý tým se přihlásil na ty webovky a potom je ty webovky protáhli hrou? a možná by bylo i super, aby jim udělovali body, za to každé stanoviště, třeba za čas a za správnou odpověď (u některých). budu to dělat přes git hubStanoviště:
+
+Česká národní banka - návštěvnické centrum
+
+Spočítejte počet vajec ve čtvrtém sloupci zleva + razítko do bločku
+
+Do banky mohou maximálně dva lidé - reportér a kameraman - reportér plní úkol
+
+Česká minovna
+
+největší mince ve výloze
+
+Česká pojišťovna   -  úhoř
+
+Reportáž o historii budovy a její funkci a o historii úhořů zde
+
+Komerční banka
+
+Zjistit,  kvůli čemu nejčastěji lidé přicházejí na pobočku a co nelze vyřešit v aplikaci? 
+
+v bance se  nesmí natáčet, nechte si dát razítko do Vašeho bloku - přes odpověď
+
+Burza drahých kovů
+
+Rozdíl mezi cenovkou ve výloze a cenou zlata  na burze
+
+Směnárna - podvodná nebo ne - hledají kurz - průměr na jedné ulici
+
+Statisticky zpracovat 5 směnáren na Karlově ulici
+
+Průměr, minimum, maximum, absolutní, relativní odchylka
+
+Grafík
+
+Kreslí do bločku, vyfotí a nahrají někam??
+
+Jen euro, případně dolar - nákup korun, prodej Eura/Dolaru
+
+​Neviditelná daň - Pošlete je do běžné sámošky/večerky. Musí najít jeden produkt se sníženou sazbou DPH a jeden se základní (např. chleba vs. alkohol). Úkol: Vypočítat, kolik korun z ceny jde státu.
+
+Pařížská - ​U galerie nebo luxusních butiků musí najít nejdražší vystavený kousek ve výloze a vypočítat, kolik let by na něj musel vydělávat aprobovaný středoškolský učitel s praxí 5 let (předpokládejte, že se jeho plat nemění a uvažujte tabulkovou mzdu bez bonusů). 
+
+BONUS: započítejte i běžné výdaje na živobytí v Praze
+
+
+
+Nápady ke hře:
+
+Každá skupina vlastního kameramana a reportéra
+
+Nějaká kartička, na kterou vyplňují
+
+Složka se všemi proprietami (bloček poskytnut)
+
+To je skvělý nápad! Městské hry (tzv. urban games) jsou v Praze super a finanční téma je v centru města, kde je ČNB i burza, naprosto ideální.
+
+Jelikož to chceš dělat přes GitHub (předpokládám GitHub Pages), máš k dispozici skvělý nástroj na statický web. Aby web fungoval dynamicky (přihlašování, body, různé trasy), aniž bys musel programovat složitý backend s databází, doporučuji kombinaci GitHubu a Google Sheets/Forms (jako databáze).
+
+Zde je návrh, jak to technicky a organizačně postavit:
+
+1. Technické řešení (Jak to rozchodit na GitHubu)
+Jelikož GitHub Pages neumí ukládat data (je to jen "výloha"), využijeme drobný trik:
+
+Frontend (Web): Uděláš jednoduchou stránku v HTML/JS.
+
+Přihlášení: Týmům prostě dáš "Kód týmu" (např. ALFA123). Web po zadání kódu rozpozná, o jaký tým jde.
+
+Logika tras: V JavaScriptu si nadefinuješ pole tras.
+
+Příklad: Tým A má trasu [ČNB, Minovna, Směnárna...], Tým B má [Minovna, Pařížská, ČNB...].
+
+Odesílání odpovědí: Místo složitého kódování propoj web s Google Formem. Web po splnění úkolu otevře formulář (nebo ho do sebe vloží), kam žáci napíšou odpověď a ID týmu. Ty pak v Excelu uvidíš časové razítko i odpověď.
+
+2. Struktura webové aplikace
+Web by mohl mít tři hlavní sekce:
+
+A. Dashboard (Hlavní obrazovka)
+Po zadání kódu týmu se zobrazí:
+
+Aktuální stanoviště: Název a šipka/mapa.
+
+Stav hry: "3 z 8 stanovišť hotovo".
+
+Tlačítko "Jsme na místě": Odemkne zadání úkolu.
+
+B. Zadání úkolu
+Tady budou instrukce, které jsi vypsal (např. u ČNB: "Počet vajec + razítko").
+
+Interaktivní prvky: U úkolů jako "Směnárna" tam může být kalkulačka nebo pole pro zadání výsledku.
+
+Nahrávání fotek: Pokud mají fotit grafy, nejjednodušší je nechat je fotku nahrát do sdíleného Google Disku nebo jako přílohu do Google Formu.
+
+C. Bodování (Gamifikace)
+Body můžeš počítat dvěma způsoby:
+
+Automaticky: Web zkontroluje správnost čísla (např. u počtu vajec nebo DPH). Pokud je správně -> +10 bodů.
+
+Ručně (Po hře): Ty jako organizátor projdeš nahrané reportáže a tabulku výsledků a body přidělíš finálně.
+
+3. Návrh rotace tras (Algoritmus)
+Aby se týmy nepotkaly na jednom místě, použij tzv. Round Robin systém.
+
+Tým	Start	2. stanoviště	3. stanoviště	...
+Tým 1	ČNB	Minovna	Komerční banka	...
+Tým 2	Minovna	Komerční banka	Směnárna	...
+Tým 3	Komerční banka	Směnárna	Pařížská	...
+Tip: Do kódu webu si dáš jednoduchou podmínku: if (teamCode == 'ALFA') { route = [1, 2, 3, 4]; }.
+
+4. Vylepšení vašich stanovišť (Tipy z praxe)
+Pařížská & učitel: Tohle je geniální úkol! Doporučuji jim dát do webu odkaz na aktuální platové tabulky státních zaměstnanců (PDF), aby se naučili v nich číst.
+
+Neviditelná daň: Aby to nebylo moc lehké, dej jim za úkol vypočítat daň z celkové ceny (pozor na rozdíl mezi výpočtem daně "shora" a "zdola").
+
+Pro základní sazbu 21 % je výpočet: DPH=cena_v 
+c
+ˇ
+ etn 
+e
+ˇ
+ _dan 
+e
+ˇ
+ × 
+121
+21
+​
+ 
+
+Reportér a kameraman: Pokud mají natáčet videa, na GitHub web dej velké tlačítko "Odevzdat reportáž", které je hodí na upload stránku (třeba ulož.to nebo Google Drive složku).
+
+5. Jak začít na GitHubu?
+Vytvoř si repository (např. financni-hra-praha).
+
+V nastavení zapni GitHub Pages (v sekci Pages vyber "Deploy from a branch" -> Main).
+
+Vytvoř soubor index.html.
+
+Pokud chceš, aby to vypadalo moderně a fungovalo na mobilu, použij CSS framework Bootstrap – je to zdarma a vypadá to profesionálně i na telefonech studentů.
+
+Chceš, abych ti napsal základní HTML/JavaScript kód pro ten rozcestník tras, který si pak jen upravíš?
+
+máme více týmů, budou chodit po třech a budme je vypouštět po cca 5 minutách.
+
+To dává smysl. Interval 5 minut je u městské hry docela „na těsno“, takže ten web bude klíčový v tom, aby je hnal kupředu a nikde se netvořily zácpy (tzv. bottlenecky).
+
+Aby se týmy nekupily u jednoho stanoviště (např. u té úzké výlohy Minovny), doporučuji využít asynchronní start.
+
+Zde je technický a logický plán, jak to postavit:
+
+1. Architektura "Webového Průvodce"
+Na GitHubu si vytvoříš jednu stránku, která se bude chovat jako aplikace. Tady je základní logika, kterou vložíš do svého index.html:
+
+Registrace / Přihlášení
+Místo složitých hesel dej každému týmu kartičku s QR kódem. Ten kód bude obsahovat URL adresu s parametrem, např.: mojehru.github.io?tym=1.
+
+Web automaticky pozná: "Aha, vy jste Tým 1, vaše trasa začíná u ČNB."
+
+Tím odpadne zdlouhavé vypisování jmen na startu.
+
+Časomíra a checkpointy
+V kódu JavaScriptu nastavíš pro každý tým jiný seznam stanovišť.
+
+Tým 1: ČNB -> Minovna -> Komerčka...
+
+Tým 2: Minovna -> Komerčka -> Směnárna...
+
+Tým 3: Komerčka -> Směnárna -> Pařížská...
+
+Důležité: Pokud je vypouštíte po 5 minutách, první týmy musí mít stanoviště, která jsou od sebe dál, nebo ta, kde se úkol plní rychle (např. Minovna je rychlejší než počítání průměru u směnáren).
+
+2. Bodovací systém přes "Hidden Inputs"
+Aby se body sčítaly a ty jsi je měl v tabulce, využijeme Google Forms API.
+Na webu bude textové pole pro odpověď. Jakmile student klikne na „Odeslat“, web na pozadí pošle data do tvého Google Formu včetně:
+
+ID týmu
+
+ID stanoviště
+
+Odpověď
+
+Čas strávený na stanovišti (JavaScript umí změřit, jak dlouho měli stránku otevřenou).
+
+3. Ukázka kódu (Struktura trasy)
+Takhle si můžeš v JavaScriptu nadefinovat trasy, aby se týmy nepotkaly:
+
+JavaScript
+const trasy = {
+  "tym1": ["cnb", "minovna", "kb", "smenarna", "dan", "parizska"],
+  "tym2": ["minovna", "kb", "smenarna", "dan", "parizska", "cnb"],
+  "tym3": ["kb", "smenarna", "dan", "parizska", "cnb", "minovna"]
+};
+
+// Funkce pro zobrazení úkolu
+function nactiUkol(tymId, indexStanoviste) {
+  const stanovisteId = trasy[tymId][indexStanoviste];
+  // Zobrazí text úkolu pro dané ID ze seznamu
+}
+4. Praktické tipy pro "Pětiminutovku"
+Pojišťovna (Úhoři) jako "buffer": Reportáž o historii budovy a úhořích zabere čas. Pokud uvidíš, že se týmy dohánějí, pošli je na tohle stanoviště, tam se fronta "rozpustí", protože každý reportér mluví jinak dlouho.
+
+Komerční banka (Razítko): Tady pozor. Pokud tam přijde 5 týmů po 5 minutách, bankovní úředníci tě nebudou mít rádi. Doporučuji toto stanoviště dát jako "volitelné" nebo ho rozdělit na dvě různé pobočky v okolí.
+
+Offline režim: Praha má v uličkách občas slabý signál. Udělej web tak, aby se instrukce načetly hned na startu všechny najednou a JavaScript je jen postupně odkrýval.
+
+5. Co s těmi bločky?
+I když máte web, bloček je super záloha.
+
+Do webu dej tlačítko: "Máš razítko v bločku? [ANO]".
+
+Teprve po kliknutí se jim zobrazí cesta na další stanoviště. Funguje to jako digitální zámek.
+
+Mám ti připravit jednoduchou šablonu HTML souboru, kterou si nahraješ na GitHub a která tohle přepínání stanovišť zvládne? Stačí mi říct, kolik týmů celkem plánujete.
+
+dej mi více kombinací tras pro více týmů prosím
+
+Aby se vám týmy na trase nesrazily, je potřeba vytvořit systém tzv. fázového posunu. Máte 8 stanovišť, což je ideální počet pro rozptýlení skupin.
+
+Při intervalu 5 minut mezi starty doporučuji rozdělit týmy do tří hlavních větví. Každá větev začíná na jiném konci pomyslného okruhu, aby se eliminovalo riziko, že se potkají hned u první výlohy.
+
+Zde je rozpis tras pro 9 týmů (pokud jich máte víc, prostě rotaci opakujte):
+
+Logika rotace (8 stanovišť)
+ČNB (Národní banka)
+
+Minovna (Mince)
+
+Pojišťovna (Úhoři)
+
+KB (Komerčka)
+
+Burza (Drahé kovy)
+
+Směnárna (Statistika)
+
+DPH (Sámoška)
+
+Pařížská (Učitel)
+
+Rozpis tras pro jednotlivé týmy
+Týmy vypouštějte postupně, ale každému dejte do webu jiný startovní bod:
+
+Tým	Pořadí stanovišť (čísla viz seznam výše)	Poznámka
+Tým 1	1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8	Klasický okruh
+Tým 2	2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 1	Start u Minovny
+Tým 3	3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 1 -> 2	Start u Pojišťovny
+Tým 4	4 -> 5 -> 6 -> 7 -> 8 -> 1 -> 2 -> 3	Start u KB
+Tým 5	5 -> 6 -> 7 -> 8 -> 1 -> 2 -> 3 -> 4	Start u Burzy
+Tým 6	6 -> 7 -> 8 -> 1 -> 2 -> 3 -> 4 -> 5	Start u Směnárny
+Tým 7	7 -> 8 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6	Start u DPH (Sámoška)
+Tým 8	8 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7	Start v Pařížské
+Tým 9	1 -> 3 -> 5 -> 7 -> 2 -> 4 -> 6 -> 8	"Skákací" trasa (proti zácpám)
+Jak to ošetřit na webu (Technicky)
+V JavaScriptu na vašem GitHubu to vyřešíte jednoduše pomocí pole (Array). Každému týmu přiřadíte index, od kterého začíná.
+
+JavaScript
+const vsechnaStanoviste = [
+  "Česká národní banka", 
+  "Česká minovna", 
+  "Česká pojišťovna", 
+  "Komerční banka", 
+  "Burza drahých kovů", 
+  "Směnárny Karlova", 
+  "Sámoška (DPH)", 
+  "Pařížská"
+];
+
+// Funkce, která posune pole pro konkrétní tým
+function ziskejTrasuProTym(cisloTymu) {
+  let posun = cisloTymu % vsechnaStanoviste.length;
+  return [...vsechnaStanoviste.slice(posun), ...vsechnaStanoviste.slice(0, posun)];
+}
+Na co si dát pozor:
+Směnárny (Karlova ulice): Toto je "zdržovací" stanoviště (počítají 5 směnáren + průměry). Za tento bod nezařazujte úkol, který je hned vedle a trvá krátce (např. Minovnu), jinak se tam týmy srazí.
+
+Otevírací doby: Pokud hra probíhá dopoledne, v ČNB i KB bude plno. Pokud trasa 1 začíná v ČNB, trasa 5 by měla začínat co nejdále (např. v té Pařížské), aby se lidé rozptýlili po městě.
+
+Kapacita ČNB: Píšete "maximálně dva lidé dovnitř". Pokud máte týmy po třech, ten třetí musí hlídat venku nebo dělat reportáž z ulice. Web by na to měl tým upozornit: "Pozor, teď se rozdělte! Reportér a kameraman dovnitř, zbytek týmu připravuje otázky venku."
+
+Chcete do té tabulky tras dopsat i konkrétní časy startů, abyste věděli, kdy koho přesně vypustit?
+
+super a ted step by step jak to mám udělat
+
+Vytvořit takovou hru na GitHubu je skvělý projekt. Protože GitHub Pages neumí ukládat data (je to statický server), využijeme kombinaci GitHubu (pro zobrazení hry) a Google Forms (pro sběr výsledků a bodování).
+
+Zde je váš podrobný návod:
+
+Krok 1: Příprava dat v Google Forms
+Aby se vám výsledky sypaly na jedno místo a vy jste mohli počítat body, vytvořte si Google Formulář.
+
+Vytvořte pole: ID týmu, Název stanoviště, Odpověď/Výsledek a Odkaz na fotku/video (volitelně).
+
+V nastavení formuláře zapněte "Shromažďovat e-mailové adresy" (pokud chcete) a hlavně si otevřete odpovědní tabulku v Google Sheets.
+
+Tip pro experty: Google Forms umožňují generovat "předvyplněné odkazy". Můžete tedy z webu poslat studenta na formulář, kde už bude mít vyplněné své ID týmu.
+
+Krok 2: Struktura souborů na GitHubu
+Na svém počítači (nebo přímo v prohlížeči na GitHub.com) vytvořte nový Repository (např. mestska-hra-praha). Struktura bude vypadat takto:
+
+index.html (Hlavní rozcestník – zadání kódu týmu)
+
+hra.html (Samotné rozhraní hry s úkoly)
+
+style.css (Aby to na mobilu vypadalo hezky)
+
+script.js (Logika tras a přepínání stanovišť)
+
+Krok 3: Logika tras v JavaScriptu (script.js)
+Tohle je srdce hry. Musíte definovat pole objektů se stanovišti a trasy pro týmy.
+
+JavaScript
+const vsechnaStanoviste = [
+    { id: 0, nazev: "ČNB", zadani: "Spočítejte vejce ve 4. sloupci a získejte razítko.", poloha: "Na Příkopě 28" },
+    { id: 1, nazev: "Česká minovna", zadani: "Najděte největší minci ve výloze a zapište její název.", poloha: "Havířská 3" },
+    { id: 2, nazev: "Pojišťovna - Úhoři", zadani: "Natočte reportáž o historii budovy a úhořích.", poloha: "Spálená 75/16" },
+    // ... doplňte všech 8
+];
+
+// Definice tras (posunutí indexů)
+function inicializujHru() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tymId = urlParams.get('tym'); // např. ?tym=1
+    
+    // Logika rotace: Tým 1 začíná od 0, Tým 2 od 1...
+    let poradi = [];
+    for(let i = 0; i < vsechnaStanoviste.length; i++) {
+        let index = (i + parseInt(tymId) - 1) % vsechnaStanoviste.length;
+        poradi.push(vsechnaStanoviste[index]);
+    }
+    return poradi;
+}
+Krok 4: Uživatelské rozhraní (hra.html)
+Na této stránce se bude zobrazovat vždy jen jeden aktuální úkol.
+
+Zobrazení stanoviště: Název, adresa, text úkolu.
+
+Interaktivní prvek: Tlačítko „Splněno / Odeslat odpověď“.
+
+Tlačítko na další krok: Po odeslání se v JavaScriptu změní indexAktualnihoStanoviste++ a překreslí se obsah stránky.
+
+Důležité: Nezapomeňte na meta tag pro mobily, aby se stránka nezobrazovala jako na počítači:
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+Krok 5: Publikace přes GitHub Pages
+Nahrajte (Push) soubory do repository.
+
+Jděte do Settings -> Pages.
+
+V sekci Build and deployment vyberte větev main.
+
+GitHub vám vypíše URL (např. https://uzivatel.github.io/mestska-hra-praha/).
+
+Krok 6: Příprava pro studenty (QR kódy)
+Místo aby studenti něco složitě vypisovali, vytiskněte jim kartičky s QR kódy. Každý tým dostane svůj unikátní kód:
+
+Tým 1: .../hra.html?tym=1
+
+Tým 2: .../hra.html?tym=2
+
+...atd.
+
+Jakmile kód naskenují, web díky skriptu v Kroku 3 pozná, jakou trasu jim má ukázat jako první.
+
+Checklist před startem (Organizační)
+Test konektivity: Projděte si trasu sami a ověřte, že v ČNB nebo v metru u směnáren máte signál na načtení webu.
+
+Powerbanka: Budete ji potřebovat vy i týmy (natáčení videí a zapnutý displej vybíjí mobil bleskově).
+
+Záložní bloček: Skvěle vymyšleno! Pokud někomu dojde data nebo baterka, musí mít papírovou verzi úkolů u sebe.
+
+Instruktáž k bankám: Zdůrazněte jim, že v KB a ČNB jsou "hosté". Razítko dostanou jen za slušné chování.
+
+Chceš, abych ti vygeneroval kompletní kód pro index.html a script.js, který stačí jen zkopírovat? (Bude to fungovat tak, že po zadání čísla týmu je to provede celým okruhem).
+
+ano dej mi prosim kompletní kody na všechno
+
+Tady máš kompletní, funkční sadu kódů. Jsou navrženy tak, aby byly "mobile-first" (dobře se ovládaly na telefonu v terénu) a nevyžadovaly žádnou databázi.
+
+Všechna data o týmech a trasách jsou přímo v kódu. Pro odesílání odpovědí doporučuji v kódu nahradit odkaz na Google formulář tvým vlastním.
+
+1. index.html (Vstupní brána)
+Tato stránka slouží k "přihlášení" týmu. Stačí zadat číslo a web je přesměruje na jejich specifickou trasu.
+
+HTML
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanční hra Praha - Start</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Finanční hra: Praha</h1>
+        <p>Vítejte u městské hry. Zadejte číslo vašeho týmu, které vám přidělil instruktor.</p>
+        
+        <input type="number" id="teamInput" placeholder="Číslo týmu (např. 1)">
+        <button onclick="startHry()" class="btn-main">Spustit hru</button>
+    </div>
+
+    <script>
+        function startHry() {
+            const teamId = document.getElementById('teamInput').value;
+            if (teamId > 0) {
+                window.location.href = `hra.html?team=${teamId}`;
+            } else {
+                alert("Zadejte platné číslo týmu!");
+            }
+        }
+    </script>
+</body>
+</html>
+2. hra.html (Herní rozhraní)
+Tato stránka dynamicky mění obsah podle toho, na jakém stanovišti se tým nachází.
+
+HTML
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Průběh hry</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        Tým č. <span id="displayTeamId">?</span> | Stanoviště: <span id="currentStep">1</span>/8
+    </div>
+
+    <div class="container">
+        <h2 id="title">Načítání...</h2>
+        <div id="content" class="task-box">
+            </div>
+
+        <div id="action-area">
+            <p><strong>Úkol splněn?</strong> Zapište výsledek do bločku a potvrďte zde:</p>
+            <button onclick="nextStep()" class="btn-next">Další stanoviště →</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+3. style.css (Vzhled pro mobily)
+Tento kód zajistí, aby tlačítka byla velká (na prsty) a text čitelný i na slunci.
+
+CSS
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -49,3 +500,523 @@ input[type="number"] {
 }
 
 strong { color: #2980b9; }
+4. script.js (Logika a trasy)
+Tento skript spočítá trasu tak, aby každý tým začínal jinde.
+
+JavaScript
+const vsechnaStanoviste = [
+    { n: "ČNB", t: "Jděte do návštěvnického centra. Úkol: Spočítejte počet vajec ve 4. sloupci zleva. Dovnitř smí jen reportér a kameraman! Nezapomeňte na razítko do bločku." },
+    { n: "Česká minovna", t: "Najděte největší minci ve výloze. Jak se jmenuje a jakou má nominální hodnotu?" },
+    { n: "Česká pojišťovna (Spálená)", t: "Najděte úhoře v budově. Natočte reportáž o historii této budovy a o tom, proč jsou tu úhoři." },
+    { n: "Komerční banka", t: "Zjistěte, kvůli čemu lidé nejčastěji chodí na pobočku a co nelze vyřešit v aplikaci. Nechte si dát razítko (v bance se nesmí natáčet!)." },
+    { n: "Burza drahých kovů", t: "Porovnejte cenovku zlata ve výloze s aktuální cenou zlata na burze (najděte v mobilu). Jaký je v tom rozdíl?" },
+    { n: "Směnárny (Karlova ul.)", t: "Statisticky zpracujte 5 směnáren v ulici. Vypočítejte průměr, min, max a odchylku kurzu EUR/CZK. Nakreslete graf do bločku a vyfoťte ho." },
+    { n: "Neviditelná daň", t: "Jděte do běžné samoobsluhy. Najděte jeden produkt se sníženou sazbou DPH a jeden se základní. Vypočítejte, kolik korun z každého jde státu." },
+    { n: "Pařížská ulice", t: "Najděte nejdražší věc ve výloze. Vypočítejte, kolik let by na ni vydělával učitel s praxí 5 let (tabulkový plat cca 35 000 Kč čistého)." }
+];
+
+let currentStepIndex = 0;
+let teamRoute = [];
+
+// Načtení parametrů z URL
+const params = new URLSearchParams(window.location.search);
+const teamId = parseInt(params.get('team')) || 1;
+
+function generujTrasu(id) {
+    // Vytvoří kopii pole posunutou o ID týmu
+    let shift = (id - 1) % vsechnaStanoviste.length;
+    return [...vsechnaStanoviste.slice(shift), ...vsechnaStanoviste.slice(0, shift)];
+}
+
+function updateUI() {
+    if (currentStepIndex >= teamRoute.length) {
+        document.getElementById('content').innerHTML = "<h2>GRATULUJEME!</h2><p>Prošli jste všechna stanoviště. Teď se vraťte na základnu pro vyhodnocení.</p>";
+        document.getElementById('action-area').style.display = "none";
+        return;
+    }
+
+    const st = teamRoute[currentStepIndex];
+    document.getElementById('displayTeamId').innerText = teamId;
+    document.getElementById('currentStep').innerText = currentStepIndex + 1;
+    document.getElementById('title').innerText = st.n;
+    document.getElementById('content').innerHTML = `<p>${st.t}</p>`;
+}
+
+function nextStep() {
+    if (confirm("Máte splněno a zapsáno v bločku?")) {
+        currentStepIndex++;
+        updateUI();
+        window.scrollTo(0,0);
+    }
+}
+
+// Inicializace
+teamRoute = generujTrasu(teamId);
+updateUI();
+Jak to zprovoznit (Step-by-Step):
+GitHub: Vytvoř si nový "Public Repository".
+
+Upload: Nahraj tam všechy 4 soubory (index.html, hra.html, style.css, script.js).
+
+Aktivace webu: * Klikni na Settings (vpravo nahoře v tom repozitáři).
+
+V levém menu vyber Pages.
+
+U "Branch" vyber main a klikni na Save.
+
+Odkaz: Po chvíli se nahoře objeví odkaz (např. https://tvojejmeno.github.io/tvujsoubor/).
+
+Test: Zkus do prohlížeče zadat ten odkaz. Mělo by to chtít číslo týmu. Pokud zadáš 1, začneš ČNB. Pokud zadáš 2, začneš Minovnou.
+
+Důležitá poznámka k "ukládání":
+Tento kód neposílá data na server (aby to bylo jednoduché). Studenti musí psát odpovědi do těch fyzických bločků, které jim dáte. Web slouží jako navigace a zadání. Pokud bys chtěl, aby psali odpovědi do mobilu, museli bychom do hra.html přidat <iframe> s Google formulářem.
+
+dej mi prosím nějaký hezčí design
+
+Jasně, pojďme tomu dát moderní „finanční“ vzhled – něco, co vypadá jako seriózní bankovní aplikace, ale zároveň se to dobře ovládá v pohybu na mobilu.
+
+Použijeme tmavě modrou (navy blue), zlatou (gold) a čistou bílou. Také přidáme stíny a zaoblené rohy, aby to vypadalo jako moderní karta.
+
+Tady jsou aktualizované verze souborů style.css a hra.html.
+
+1. Nový style.css (Moderní UI)
+Tento kód nahraď v souboru style.css. Přidal jsem animace a lepší vizuální oddělení prvků.
+
+CSS
+:root {
+    --primary: #1a2a6c; /* Tmavě modrá bankovní */
+    --accent: #f1c40f;  /* Zlatá pro akce */
+    --success: #27ae60;
+    --text: #2c3e50;
+    --bg: #f0f2f5;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    color: white;
+    padding: 20px 15px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    font-size: 1.1rem;
+}
+
+.container {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.task-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    margin: 20px 0;
+    border-left: 5px solid var(--accent);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.info-badge {
+    display: inline-block;
+    background: #e8f0fe;
+    color: var(--primary);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="number"]:focus {
+    border-color: var(--primary);
+}
+
+.btn-main, .btn-next {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(26, 42, 108, 0.3);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-main:active, .btn-next:active {
+    transform: scale(0.98);
+}
+
+.btn-next {
+    background: var(--success);
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+    margin-top: 20px;
+}
+
+.footer-note {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    margin-top: 30px;
+    text-align: center;
+}
+2. Vylepšené hra.html
+V tomto souboru jsme přidali pár vizuálních prvků (jako je "badge" pro lokalitu) pro lepší přehlednost.
+
+HTML
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hra: Finanční Praha</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        💎 Tým č. <span id="displayTeamId">?</span> | Pokrok: <span id="currentStep">1</span>/8
+    </div>
+
+    <div class="container">
+        <div class="task-box">
+            <span class="info-badge">📍 Aktuální stanoviště</span>
+            <h2 id="title">Načítání...</h2>
+            <div id="content">
+                </div>
+        </div>
+
+        <div id="action-area">
+            <button onclick="nextStep()" class="btn-next">Máme hotovo! Další úkol →</button>
+        </div>
+
+        <p class="footer-note">V případě technických potíží kontaktujte organizátora.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+3. Drobná úprava v script.js
+Aby design fungoval správně, upravíme funkci updateUI v script.js, aby vkládala text hezčeji:
+
+JavaScript
+// ... (zbytek skriptu zůstává stejný, změň jen tuhle funkci)
+
+function updateUI() {
+    const contentDiv = document.getElementById('content');
+    const actionArea = document.getElementById('action-area');
+
+    if (currentStepIndex >= teamRoute.length) {
+        contentDiv.innerHTML = `
+            <div style="text-align:center">
+                <h2 style="font-size: 3rem">🏆</h2>
+                <h3>Mise splněna!</h3>
+                <p>Gratulujeme, prošli jste všechna stanoviště finančního světa.</p>
+                <p>Nyní se vraťte do návštěvnického centra k vyhodnocení.</p>
+            </div>`;
+        actionArea.style.display = "none";
+        document.getElementById('title').innerText = "Konec hry";
+        return;
+    }
+
+    const st = teamRoute[currentStepIndex];
+    document.getElementById('displayTeamId').innerText = teamId;
+    document.getElementById('currentStep').innerText = currentStepIndex + 1;
+    document.getElementById('title').innerText = st.n;
+    
+    // Rozdělíme text úkolu, aby vypadal lépe (pokud obsahuje "Úkol:", uděláme ho tučným)
+    let formattedText = st.t.replace("Úkol:", "<br><strong>🎯 Úkol:</strong>");
+    contentDiv.innerHTML = `<p>${formattedText}</p>`;
+}
+Co se změnilo?
+Gradient v hlavičce: Vypadá to víc jako "finanční" barvy (kombinace modré, červené a zlaté).
+
+Stíny a karty: Jednotlivé úkoly jsou v bílých "kartách", které vystupují z pozadí.
+
+Animace: Když se přepne úkol, nová karta jemně "připluje" zespodu (působí to jako profi aplikace).
+
+Adaptivní design: Na iPhonech i Androidu to teď bude vypadat skvěle, tlačítka jsou dostatečně velká i pro studenty v rukavicích (pokud bude zima).
+
+Tip: Pokud chceš úplnou "pecku", přidej do index.html nad ten nadpis nějaké pěkné emoji peněz 💸 nebo budovy banky 🏛️.
+
+ideálně růžovo tyrkysové s černými detaily
+
+, vygenerováno umělou inteligencí
+
+včetně toho indexu
+
+Tady je kompletní sada souborů s moderním růžovo-tyrkysovým (Cyberpunk/Neon) designem na černém pozadí. Tento styl bude na mobilech studentů vypadat skvěle a černá barva navíc šetří baterii.
+
+Soubory ke stažení:
+Hlavní strana: 
+Ikona aplikace HTML
+ index 
+HTML
+
+Herní rozhraní: 
+Ikona aplikace HTML
+ hra 
+HTML
+
+Design (CSS): 
+Ikona aplikace CSS
+ style 
+CSS
+
+Logika (JS): 
+Ikona aplikace JS
+ script 
+JS
+
+Jak to nahrát na GitHub:
+Vytvořte si na GitHubu nový repozitář.
+
+Nahrajte do něj tyto 4 soubory (musí mít přesně tyto názvy).
+
+V nastavení repozitáře (Settings -> Pages) zapněte zobrazování z větve main.
+
+Web bude dostupný na adrese https://vase-jmeno.github.io/nazev-projektu/.
+
+Co je v tomto designu nového:
+Neonový vizuál: Černé pozadí s růžovými (Pink) a tyrkysovými (Cyan) akcenty a stíny (glow efekt).
+
+Progress Bar: V horní části obrazovky se plynule posouvá barevná lišta podle toho, kolik stanovišť už tým prošel.
+
+Skleněný efekt (Glassmorphism): Karty s úkoly jsou bílé s vysokou průhledností, což vytváří moderní hloubku.
+
+UX pro terén: Tlačítka mají vibrační odezvu (vizuální zmenšení při kliku) a text je dostatečně velký a kontrastní, aby byl čitelný i na přímém slunci.
+
+Logika tras: Stejně jako v předchozím návrhu, web automaticky spočítá jinou trasu pro každý tým (např. Tým 1 začíná v ČNB, Tým 2 v Minovně atd.).
+
+Stačí tyto soubory nahrát na váš GitHub a hra může začít! Hodně štěstí s městskou hrou!
+
+
+dej mi to pr
+
+
+Chaty se společností Anglicko-české gymnázium AMAZON se nepoužívají k učení našich modelů. Gemini je AI. Může dělat chyby, proto si všechno kontrolujte. Vaše soukromí a GeminiOtevře se v novém okně
+
+:root {
+    --pink: #ff007f;
+    --turquoise: #00f2ff;
+    --black: #000000;
+    --dark-grey: #1a1a1a;
+    --white: #ffffff;
+    --glass: rgba(255, 255, 255, 0.9);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    background-color: var(--black);
+    background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 100%);
+    color: var(--white);
+    min-height: 100vh;
+}
+
+.container {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* HEADER & PROGRESS */
+.header {
+    background: var(--black);
+    border-bottom: 2px solid var(--pink);
+    padding: 15px 0 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 10px 20px;
+}
+
+.badge-team {
+    background: var(--pink);
+    color: var(--white);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px var(--pink);
+}
+
+.progress-text {
+    color: var(--turquoise);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--turquoise);
+}
+
+.progress-bar-container {
+    height: 4px;
+    background: #333;
+    width: 100%;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pink), var(--turquoise));
+    width: 12.5%;
+    transition: width 0.5s ease;
+}
+
+/* CARDS */
+.card, .task-card {
+    background: var(--glass);
+    color: var(--black);
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 20px;
+    border: 3px solid var(--turquoise);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+}
+
+.main-start {
+    display: flex;
+    align-items: center;
+    min-height: 90vh;
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: var(--black);
+    text-transform: uppercase;
+    border-bottom: 4px solid var(--pink);
+    display: inline-block;
+}
+
+h2 {
+    color: var(--pink);
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+.location-badge {
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+/* INPUTS & BUTTONS */
+.input-group {
+    margin: 30px 0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-main, .btn-next {
+    width: 100%;
+    padding: 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-main {
+    background: var(--black);
+    color: var(--turquoise);
+    border: 2px solid var(--turquoise);
+}
+
+.btn-next {
+    background: var(--pink);
+    color: var(--white);
+    box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
+    margin-top: 10px;
+}
+
+.btn-next:active {
+    transform: scale(0.95);
+    background: var(--black);
+    color: var(--pink);
+    border: 2px solid var(--pink);
+}
+
+.task-content {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    margin: 20px 0;
+}
+
+.helper-text {
+    text-align: center;
+    color: var(--turquoise);
+    font-size: 0.8rem;
+    margin-top: 15px;
+    opacity: 0.8;
+}
+
+strong {
+    color: var(--pink);
+}
+style.css
+Zobrazuje se položka style.css

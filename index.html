@@ -1,1 +1,29 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanční hra Praha - Start</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Finanční hra: Praha</h1>
+        <p>Vítejte u městské hry. Zadejte číslo vašeho týmu, které vám přidělil instruktor.</p>
+        
+        <input type="number" id="teamInput" placeholder="Číslo týmu (např. 1)">
+        <button onclick="startHry()" class="btn-main">Spustit hru</button>
+    </div>
 
+    <script>
+        function startHry() {
+            const teamId = document.getElementById('teamInput').value;
+            if (teamId > 0) {
+                window.location.href = `hra.html?team=${teamId}`;
+            } else {
+                alert("Zadejte platné číslo týmu!");
+            }
+        }
+    </script>
+</body>
+</html>

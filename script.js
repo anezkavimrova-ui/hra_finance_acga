@@ -47,7 +47,7 @@ const vsechnaStanoviste = [
         cestaText: "Zjistěte, ve které ulici se nachází Knihkupectví Karolinum. Právě tam totiž míříte!",
         t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty a vyfotit a nahrát hotovou statistiku z notýsku přes tlačítko níže!",
         typ: "smenarny_media",
-        link: "https://photos.app.goo.gl/vase-album", // Sem vlož svůj odkaz pro směnárny
+        link: "https://drive.google.com/drive/folders/1Rz4vZQO1rsPmvWCK9uiKGdnQ2m3dxt5s?usp=sharing", // Sem vlož svůj odkaz pro směnárny
         heslo: "celetna"
     }
 ];

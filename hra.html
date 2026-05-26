@@ -26,15 +26,24 @@
             flex-direction: column;
         }
 
-        /* Horní lišta s pokrokem */
+        /* Horní lišta s pokrokem a celkovým časem */
         .header {
             background: var(--black);
             color: var(--turquoise);
             padding: 15px;
             text-align: center;
             border-bottom: 4px solid var(--pink);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: space-between;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 0 10px;
         }
 
         .progress-container {
@@ -67,7 +76,7 @@
             width: 100%;
             max-width: 450px;
             box-shadow: 10px 10px 0px var(--black);
-            text-align: center; /* Sjednoceno na střed pro kartu */
+            text-align: center;
         }
 
         .location-tag {
@@ -96,10 +105,9 @@
             line-height: 1.4;
             margin-bottom: 25px;
             font-family: Arial, sans-serif;
-            text-align: left; /* Text úkolu zarovnáme doleva pro lepší čtení */
+            text-align: left;
         }
 
-        /* TOTÁLNÍ OČISTA: Úkol je teď čistě růžový nápis na bílém bez jakýchkoliv podkladů */
         .ukol-ruzove {
             color: var(--pink) !important;
             background: transparent !important;
@@ -111,7 +119,6 @@
             font-family: 'Arial Black', sans-serif;
         }
 
-        /* STYL PRO ODPOČET ČASU */
         .timer-style {
             background: var(--black);
             color: var(--pink);
@@ -124,7 +131,6 @@
             text-align: center;
         }
 
-        /* TLAČÍTKO: UŽ JSME NA MÍSTE */
         .btn-arrived-style {
             background: var(--turquoise);
             color: var(--black);
@@ -146,7 +152,6 @@
             box-shadow: 0px 0px 0px var(--black);
         }
 
-        /* ČÍSELNÝ ZÁMEK / VSTUPNÍ BOX */
         .answer-box {
             background: var(--turquoise);
             border: 3px solid var(--black);
@@ -175,7 +180,6 @@
             font-family: 'Arial Black', sans-serif;
         }
 
-        /* BOX PRO MULTIMÉDIA (GDRIVE) */
         .media-box {
             border: 3px dashed var(--pink);
             border-radius: 15px;
@@ -198,7 +202,6 @@
             margin-top: 5px;
         }
 
-        /* SPECIÁLNÍ TABULKA PRO SMĚNÁRNY */
         .exchange-table-box {
             margin: 20px 0;
             border: 3px solid var(--black);
@@ -236,7 +239,6 @@
             font-weight: bold;
         }
 
-        /* TLAČÍTKO: MÁME HOTOVO */
         .btn-next {
             background: var(--pink);
             color: var(--white);
@@ -272,7 +274,10 @@
 <body>
 
     <div class="header">
-        Tým #<span id="displayTeamId">?</span> | Stanoviště <span id="currentStep">1</span>
+        <div class="header-stats">
+            <div>Tým #<span id="displayTeamId">?</span> | Stanoviště <span id="currentStep">1</span></div>
+            <div>Čas: <span id="gameTimer" style="color: var(--pink);">00:00</span></div>
+        </div>
     </div>
     
     <div class="progress-container">
@@ -285,7 +290,6 @@
             <h2 id="title">Načítání úkolu...</h2>
             
             <div id="content" class="task-content"></div>
-
             <div id="action-area"></div>
 
             <div class="school-footer">

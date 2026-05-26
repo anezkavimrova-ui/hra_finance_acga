@@ -8,6 +8,7 @@ const vsechnaStanoviste = [
         cestaText: "Zadejte do mapy tyto souřadnice a dorazte na místo: 50.0870536N, 14.4286689E",
         t: "Úkol: Spočítejte, kolik vajec je ve čtvrtém sloupci zleva. Na recepci si nechte dát razítko do notýsku.",
         typ: "cislo",
+        link: "",
         reseni: 4, 
         heslo: ["cnb", "ceska narodni banka"] 
     },
@@ -17,6 +18,7 @@ const vsechnaStanoviste = [
         cestaText: "Najděte budovu, v jejíž blízkosti se nachází socha muže bez tváře. V její výloze dnes uvidíte víc stříbra než v celém bločku vašich poznámek. Úkol začíná u skla, za kterým se leskne pětikilo, které byste v automatu na kávu neudali.",
         t: "Doufám, že jste u České mincovny!<br><br>Úkol: Najděte ve výloze minci s nejvyšší nominální hodnotou a zadejte její částku v Kč.",
         typ: "cislo",
+        link: "",
         reseni: 200,
         heslo: ["mincovna", "ceska mincovna"] 
     },
@@ -37,6 +39,7 @@ const vsechnaStanoviste = [
         t: "Doufám, že stojíte před správnou bankou!<br><br>Úkol: Zjistěte, kvůli čemu nejčastěji lidé přicházejí na pobočku a co nelze vyřešit v mobilní aplikaci. V bance z bezpečnostních důvodů NENATÁČEJTE. Odpověď si zapište do notýsku a nechte si přes ni dát na pobočce razítko. Fotografii této stránky s razítkem a odpovědí nahrajte přes tlačítko níže.",
         typ: "media",
         link: "https://drive.google.com/drive/folders/1HuVArd8cLJr5S5QqOYDjPCnFRFKAnrla?usp=sharing",
+        reseni: 0,
         heslo: ["kb", "komercni banka"] 
     },
     { 
@@ -46,6 +49,7 @@ const vsechnaStanoviste = [
         t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty a vyfotit a nahrát hotovou statistiku z notýsku přes tlačítko níže!",
         typ: "smenarny_media",
         link: "https://drive.google.com/drive/folders/1xSLI55_cf8s9CAT7Hcd8Wl1V-1_04CE1?usp=sharing", 
+        reseni: 0,
         heslo: "celetna"
     },
     {
@@ -144,6 +148,7 @@ function startTimer(durationSeconds) {
 }
 
 function normalizujText(text) {
+    if (!text) return "";
     return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 }
 
@@ -175,6 +180,8 @@ function updateUI() {
     const actionArea = document.getElementById('action-area');
     const progressBar = document.getElementById('progressBar');
 
+    if (!contentDiv) return;
+
     if (currentStepIndex >= teamRoute.length) {
         clearInterval(gameTimerInterval); 
         
@@ -183,8 +190,11 @@ function updateUI() {
         let diffMins = Math.floor(diffMs / 60000);
         let diffSecs = Math.floor((diffMs % 60000) / 1000);
 
-        document.getElementById('locationName').innerText = "KONEC MISE";
-        document.getElementById('title').innerText = "HOTOVO! 🏆";
+        const locName = document.getElementById('locationName');
+        const titleEl = document.getElementById('title');
+        if (locName) locName.innerText = "KONEC MISE";
+        if (titleEl) titleEl.innerText = "HOTOVO! 🏆";
+
         contentDiv.innerHTML = `
             <div style="text-align:center; padding: 10px;">
                 <p style="font-size:1.3rem; margin-bottom:20px;">Mise úspěšně dokončena!</p>
@@ -200,13 +210,15 @@ function updateUI() {
 
     const st = teamRoute[currentStepIndex];
     if(document.getElementById('displayTeamId')) document.getElementById('displayTeamId').innerText = teamId;
-    if(document.getElementById('currentStep')) document.getElementById('currentStep').innerText = currentStepIndex + 1;
+    if(currentStepIndexElement = document.getElementById('currentStep')) currentStepIndexElement.innerText = currentStepIndex + 1;
     
     let interakceHtml = "";
 
     if (fazaCesty) {
-        document.getElementById('locationName').innerText = "Místo je skryto...";
-        document.getElementById('title').innerText = "Kde je další cíl?";
+        const locName = document.getElementById('locationName');
+        const titleEl = document.getElementById('title');
+        if (locName) locName.innerText = "Místo je skryto...";
+        if (titleEl) titleEl.innerText = "Kde je další cíl?";
         
         interakceHtml = `
             <div class="task-description">
@@ -222,14 +234,19 @@ function updateUI() {
             <button id="btn-arrived" onclick="jsmeNaMiste()" class="btn-arrived-style" style="display:none;">UŽ JSME NA MÍSTĚ! 📍</button>
         `;
         contentDiv.innerHTML = interakceHtml;
-        actionArea.innerHTML = ""; 
+        if(actionArea) actionArea.innerHTML = ""; 
         startTimer(180); 
 
     } else {
-        document.getElementById('locationName').innerText = st.l;
-        document.getElementById('title').innerText = st.n;
+        const locName = document.getElementById('locationName');
+        const titleEl = document.getElementById('title');
+        if (locName) locName.innerText = st.l;
+        if (titleEl) titleEl.innerText = st.n;
         
         let formattedText = st.t.replace("Úkol 1:", "<span class='ukol-ruzove'>Úkol 1:</span>").replace("Úkol 2:", "<span class='ukol-ruzove'>Úkol 2:</span>");
+        if (!st.t.includes("Úkol 1:")) {
+            formattedText = formattedText.replace("Úkol:", "<span class='ukol-ruzove'>Úkol:</span>");
+        }
         
         if (st.typ === "cislo") {
             interakceHtml = `
@@ -243,7 +260,7 @@ function updateUI() {
                     <p>Pořiďte záznam/fotografii a nahrajte soubor sem:</p>
                     <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT SOUBOR 📸</a>
                 </div>`;
-            if (st.reseni) { 
+            if (st.reseni && typeof st.reseni === "number" && st.reseni > 0) { 
                 interakceHtml += `
                     <div class="answer-box" style="margin-top:15px;">
                         <label>Otázka: Kolikátý maskot (úhoř) to je?</label>
@@ -277,7 +294,7 @@ function updateUI() {
         }
 
         contentDiv.innerHTML = `<div class="task-description">${formattedText}</div>${interakceHtml}`;
-        actionArea.innerHTML = `<button onclick="nextStep()" class="btn-next">MÁME HOTOVO! 🚀</button>`;
+        if(actionArea) actionArea.innerHTML = `<button onclick="nextStep()" class="btn-next">MÁME HOTOVO! 🚀</button>`;
     }
     
     let progressPercent = (currentStepIndex / teamRoute.length) * 100;
@@ -295,7 +312,7 @@ function jsmeNaMiste() {
 function nextStep() {
     const st = teamRoute[currentStepIndex];
     
-    if (st.typ === "cislo" || (st.typ === "media" && st.reseni && typeof st.reseni === "number")) {
+    if (st.typ === "cislo" || (st.typ === "media" && st.reseni && typeof st.reseni === "number" && st.reseni > 0)) {
         const userVal = document.getElementById('userAnswer').value;
         if (parseInt(userVal) !== st.reseni) {
             alert("❌ Špatný výsledek! Zkuste to znovu.");
@@ -321,7 +338,7 @@ function nextStep() {
 
     if (st.typ === "parizska_kviz") {
         const odpoved = normalizujText(document.getElementById('quizAnswer').value);
-        const jeSpravne = st.reseni.some(r => normalizujText(r) === odpoved);
+        const jeSpravne = Array.isArray(st.reseni) && st.reseni.some(r => normalizujText(r) === odpoved);
         
         if (!jeSpravne) {
             alert("❌ Nesprávná odpověď na kontrolní otázku! Zkuste to znovu nebo zařaďte lepší googlení.");

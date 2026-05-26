@@ -41,13 +41,13 @@ const vsechnaStanoviste = [
         link: "https://drive.google.com/drive/folders/1HuVArd8cLJr5S5QqOYDjPCnFRFKAnrla?usp=sharing",
         heslo: ["kb", "komercni banka"] // Uzná KB i Komerční banka
     },
-    { 
+{ 
         n: "Směnárny (Celetná ulice)", 
         l: "Celetná (u Karolina)", 
         cestaText: "Zjistěte, ve které ulici se nachází Knihkupectví Karolinum. Právě tam totiž míříte!",
-        t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže a Vaše výpočty si pište do poznámkového bločku. Psané poznámky vyfoťte a nahrajte do složky. Pro postup dál musíte poctivě vyplnit všechny hodnoty!",
-        typ: "media",
-        link: "https://drive.google.com/drive/folders/1Rz4vZQO1rsPmvWCK9uiKGdnQ2m3dxt5s?usp=sharing",
+        t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty a vyfotit a nahrát hotovou statistiku z notýsku přes tlačítko níže!",
+        typ: "smenarny_media",
+        link: "https://photos.app.goo.gl/vase-album", // Sem vlož svůj odkaz pro směnárny
         heslo: "celetna"
     }
 ];
@@ -282,6 +282,36 @@ function updateUI() {
                         </tr>
                     </table>
                 </div>`;
+        } else if (st.typ === "smenarny_media") {
+            interakceHtml = `
+                <div class="exchange-table-box">
+                    <table class="exchange-table">
+                        <tr>
+                            <th>Statistika</th>
+                            <th>Euro (EUR)</th>
+                            <th>Dolar (USD)</th>
+                        </tr>
+                        <tr>
+                            <td><strong>MAXIMUM</strong></td>
+                            <td><input type="number" step="0.01" id="eurMax" placeholder="0.00"></td>
+                            <td><input type="number" step="0.01" id="usdMax" placeholder="0.00"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>MINIMUM</strong></td>
+                            <td><input type="number" step="0.01" id="eurMin" placeholder="0.00"></td>
+                            <td><input type="number" step="0.01" id="usdMin" placeholder="0.00"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>PRŮMĚR</strong></td>
+                            <td><input type="number" step="0.01" id="eurAvg" placeholder="0.00"></td>
+                            <td><input type="number" step="0.01" id="usdAvg" placeholder="0.00"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="media-box" style="margin-top: 20px;">
+                    <p>Vyfoťte statistiku zapsanou v notýsku a nahrajte ji sem:</p>
+                    <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT STATISTIKU 📸</a>
+                </div>`;
         }
 
         contentDiv.innerHTML = `<div class="task-description">${formattedText}</div>${interakceHtml}`;
@@ -324,6 +354,17 @@ function nextStep() {
                 return;
             }
         }
+    }
+    if (st.typ === "smenarny_media") {
+        const fields = ['eurMax', 'usdMax', 'eurMin', 'usdMin', 'eurAvg', 'usdAvg'];
+        for (let id of fields) {
+            const val = parseFloat(document.getElementById(id).value);
+            if (isNaN(val) || val <= 0) {
+                alert("❌ Musíte vyplnit všechna políčka tabulky platnými kurzy!");
+                return;
+            }
+        }
+        if (!confirm("Nahráli jste fotografii statistiky z notýsku do sdíleného alba?")) return;
     }
 
     if (confirm("Máte vše splněno a zapsáno v bločku? Pokračovat dál?")) {

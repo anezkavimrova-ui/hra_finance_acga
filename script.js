@@ -8,7 +8,7 @@ const vsechnaStanoviste = [
         n: "Česká národní banka", 
         l: "Na Příkopě 28", 
         cestaText: "Zadejte do mapy tyto souřadnice a dorazte na místo: 50.0870536N, 14.4286689E",
-        t: "Úkol: Spočítejte, kolik vajec je ve čtvrtém sloupci zleva. Na recepci si nechte dát největší možné razítko do kartičky.",
+        t: "Úkol: Spočítejte, kolik vajec je ve čtvrtém sloupci zleva. Na recepci si nechte dát razítko do notýsku.",
         typ: "cislo",
         reseni: 4, // TODO: Sem pak napiš správné číslo
         heslo: ["cnb", "ceska narodni banka"] // Uzná ČNB i Česká národní banka
@@ -29,7 +29,7 @@ const vsechnaStanoviste = [
         t: "Doufám, že jste ve Spálené ulici u České pojišťovny!<br><br>Úkol: Natočte krátkou reportáž o historii budovy a její funkci. V reportáži se také objeví krátká historie úhořů v budově. Video nahrajte přes tlačítko níže.",
         typ: "media",
         link: "https://drive.google.com/drive/folders/1xSLI55_cf8s9CAT7Hcd8Wl1V-1_04CE1?usp=sharing",
-        reseni: 3, // TODO: Zjistit, kolikátý úhoř to je
+        reseni: 3, // 
         heslo: ["pojistovna", "ceska pojistovna"] // Uzná Pojišťovna i Česká pojišťovna
     },
     { 
@@ -45,8 +45,9 @@ const vsechnaStanoviste = [
         n: "Směnárny (Celetná ulice)", 
         l: "Celetná (u Karolina)", 
         cestaText: "Zjistěte, ve které ulici se nachází Knihkupectví Karolinum. Právě tam totiž míříte!",
-        t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty!",
-        typ: "smenarny",
+        t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže a Vaše výpočty si pište do poznámkového bločku. Psané poznámky vyfoťte a nahrajte do složky. Pro postup dál musíte poctivě vyplnit všechny hodnoty!",
+        typ: "media",
+        link: "https://drive.google.com/drive/folders/1Rz4vZQO1rsPmvWCK9uiKGdnQ2m3dxt5s?usp=sharing",
         heslo: "celetna"
     }
 ];

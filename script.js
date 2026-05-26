@@ -28,7 +28,7 @@ const vsechnaStanoviste = [
         t: "Doufám, že jste ve Spálené ulici u České pojišťovny!<br><br>Úkol: Natočte krátkou reportáž o historii budovy a její funkci. V reportáži se také objeví krátká historie úhořů v budově. Video nahrajte přes tlačítko níže.",
         typ: "media",
         link: "https://photos.app.goo.gl/vase-album",
-        reseni: 1, // TODO: Zjistit, kolikátý úhoř to je
+        reseni: 3, // TODO: Zjistit, kolikátý úhoř to je
         heslo: "pojišťovna" // Akceptuje pojišťovna, pojistovna, POJIŠŤOVNA... (diakritiku skript ošetří)
     },
     { 

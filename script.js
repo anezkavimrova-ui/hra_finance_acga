@@ -10,7 +10,7 @@ const vsechnaStanoviste = [
         cestaText: "Zadejte do mapy tyto souřadnice a dorazte na místo: 50.0870536N, 14.4286689E",
         t: "Úkol: Spočítejte, kolik vajec je ve čtvrtém sloupci zleva. Na recepci si nechte dát největší možné razítko do kartičky.",
         typ: "cislo",
-        reseni: 12, // TODO: Sem pak napiš správné číslo
+        reseni: 4, // TODO: Sem pak napiš správné číslo
         heslo: ["cnb", "ceska narodni banka"] // Uzná ČNB i Česká národní banka
     },
     { 

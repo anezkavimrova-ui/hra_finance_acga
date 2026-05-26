@@ -1,5 +1,6 @@
 /**
  * 1. KONFIGURACE STANOVIŠŤ
+ * Kód obsahuje novou položku 'heslo' pro okamžité přeskočení 3minutové čekací doby.
  */
 const vsechnaStanoviste = [
     { 
@@ -8,7 +9,8 @@ const vsechnaStanoviste = [
         cestaText: "Zadejte do mapy tyto souřadnice a dorazte na místo: 50.0870536N, 14.4286689E",
         t: "Úkol: Spočítejte, kolik vajec je ve čtvrtém sloupci zleva. Na recepci si nechte dát největší možné razítko do kartičky.",
         typ: "cislo",
-        reseni: 12 // TODO: Sem pak napiš správné číslo
+        reseni: 12, // TODO: Sem pak napiš správné číslo
+        heslo: "cnb" // Akceptuje cnb, ČNB, Čnb...
     },
     { 
         n: "Česká minovna", 
@@ -16,7 +18,8 @@ const vsechnaStanoviste = [
         cestaText: "Najděte budovu, v jejíž blízkosti se nachází socha muže bez tváře. V její výloze dnes uvidíte víc stříbra než v celém bločku vašich poznámek. Úkol začíná u skla, za kterým se leskne pětikilo, které byste v automatu na kávu neudali.",
         t: "Doufám, že jste u České mincovny!<br><br>Úkol: Najděte ve výloze minci s nejvyšší nominální hodnotou a zadejte její částku v Kč.",
         typ: "cislo",
-        reseni: 200
+        reseni: 200,
+        heslo: "mincovna" // Akceptuje mincovna, Mincovna...
     },
     { 
         n: "Generali Česká pojišťovna (Úhoři)", 
@@ -25,22 +28,25 @@ const vsechnaStanoviste = [
         t: "Doufám, že jste ve Spálené ulici u České pojišťovny!<br><br>Úkol: Natočte krátkou reportáž o historii budovy a její funkci. V reportáži se také objeví krátká historie úhořů v budově. Video nahrajte přes tlačítko níže.",
         typ: "media",
         link: "https://photos.app.goo.gl/vase-album",
-        reseni: 1 // TODO: Zjistit, kolikátý úhoř to je
+        reseni: 1, // TODO: Zjistit, kolikátý úhoř to je
+        heslo: "pojišťovna" // Akceptuje pojišťovna, pojistovna, POJIŠŤOVNA... (diakritiku skript ošetří)
     },
     { 
         n: "Komerční banka", 
         l: "Spálená 51 (pobočka v centru)", 
         cestaText: "Zadejte do mapy tyto souřadnice a vyrazte na další místo: 50.0816983N, 14.4192744E",
-        t: "Doufám, že stojíte před správnou bankou!<br><br>Úkol: Zjistěte, kvůli čemu nejčastěji lidé přicházejí na pobočku a co nelze vyřešit v mobilní aplikaci. V bance z bezpečnostních důvodů NENATÁČEJTE. Odpověď si zapište do notýsku a nechte si přes ni dát na pobočce razítko. Fotografii této stránky s razítkem a odpovědí nahrajte přes tlačítko níže.",
+        t: "Doufám, že stojíte před správnou bankou!<br><br>Úkol: Zjistěte, kvůli čemu nejčastěji lidé přicházejí na pobočku a co nelze vyřešit v mobilní aplikaci. V bance z bezpečnostních důvodů NENATÁČEJTE. Odpověď si zapište do notýsku a nechte si přes ni dát na pobočce razítko. Fotografii této stránky s razítkem and odpovědí nahrajte přes tlačítko níže.",
         typ: "media",
-        link: "https://photos.app.goo.gl/vase-album"
+        link: "https://photos.app.goo.gl/vase-album",
+        heslo: "kb" // Akceptuje kb, KB...
     },
     { 
         n: "Směnárny (Celetná ulice)", 
         l: "Celetná (u Karolina)", 
         cestaText: "Zjistěte, ve které ulici se nachází Knihkupectví Karolinum. Právě tam totiž míříte!",
         t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty!",
-        typ: "smenarny"
+        typ: "smenarny",
+        heslo: "celetná" // Akceptuje celetna, Celetná...
     }
 ];
 
@@ -50,8 +56,9 @@ const vsechnaStanoviste = [
 let currentStepIndex = 0;
 let teamRoute = [];
 let fazaCesty = true; 
-let timerInterval = null;
-let startTime = null; // Pro celkové stopování hry
+let timerInterval = null;     
+let gameTimerInterval = null; 
+let startTime = null; 
 
 const params = new URLSearchParams(window.location.search);
 const teamId = parseInt(params.get('team')) || 1;
@@ -70,7 +77,36 @@ function generujChaotickouTrasu(id) {
 }
 
 /**
- * 4. ČASOVAČ NA STANOVIŠTI (3 MINUTY)
+ * 4. HORNÍ ČASOVAČ (Běží po celou dobu hry)
+ */
+function spustCelkovyCasovac() {
+    startTime = new Date();
+    const timerDisplay = document.getElementById('gameTimer');
+
+    gameTimerInterval = setInterval(() => {
+        let nyni = new Date();
+        let diffMs = nyni - startTime;
+        let celkemSekund = Math.floor(diffMs / 1000);
+        
+        let hodiny = Math.floor(celkemSekund / 3600);
+        let minuty = Math.floor((celkemSekund % 3600) / 60);
+        let sekundy = celkemSekund % 60;
+
+        let textCasu = "";
+        if (hodiny > 0) {
+            textCasu += hodiny + ":";
+            textCasu += (minuty < 10 ? "0" : "") + minuty + ":";
+        } else {
+            textCasu += (minuty < 10 ? "0" : "") + minuty + ":";
+        }
+        textCasu += (sekundy < 10 ? "0" : "") + sekundy;
+
+        if (timerDisplay) timerDisplay.innerText = textCasu;
+    }, 1000);
+}
+
+/**
+ * 5. ČASOVAČ NA STANOVIŠTI (3 MINUTY ČEKÁNÍ)
  */
 function startTimer(durationSeconds) {
     clearInterval(timerInterval);
@@ -86,7 +122,7 @@ function startTimer(durationSeconds) {
         let seconds = timeLeft % 60;
         if (seconds < 10) seconds = "0" + seconds;
         
-        if(timerDisplay) timerDisplay.innerText = `Tlačítko se odemkne za: ${minutes}:${seconds}`;
+        if(timerDisplay) timerDisplay.innerText = `Tlačítko příchodu se odemkne za: ${minutes}:${seconds}`;
         
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
@@ -98,15 +134,39 @@ function startTimer(durationSeconds) {
 }
 
 /**
- * 5. VYKRESLOVÁNÍ WEBU (UI)
+ * OŠETŘENÍ TEXTU (Odstraní diakritiku a velká písmena pro snadnější shodu hesel)
+ */
+function normalizujText(text) {
+    return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+}
+
+/**
+ * EXPERSNÍ ODEMČENÍ POMOCÍ HESLA
+ */
+function zkusOdemknoutHeslem() {
+    const st = teamRoute[currentStepIndex];
+    const vlozeneHeslo = document.getElementById('routePassword').value;
+    
+    if (normalizujText(vlozeneHeslo) === normalizujText(st.heslo)) {
+        clearInterval(timerInterval); // Zrušíme odpočet na místě
+        fazaCesty = false; // Skočíme na úkol
+        updateUI();
+    } else {
+        alert("❌ Nesprávné heslo lokality. Zkuste to znovu nebo počkejte na vypršení časovače.");
+    }
+}
+
+/**
+ * 6. VYKRESLOVÁNÍ WEBU (UI)
  */
 function updateUI() {
     const contentDiv = document.getElementById('content');
     const actionArea = document.getElementById('action-area');
     const progressBar = document.getElementById('progressBar');
 
-    // KONEC HRY -> Výpočet celkového času
     if (currentStepIndex >= teamRoute.length) {
+        clearInterval(gameTimerInterval); 
+        
         let endTime = new Date();
         let diffMs = endTime - startTime;
         let diffMins = Math.floor(diffMs / 60000);
@@ -118,7 +178,7 @@ function updateUI() {
             <div style="text-align:center; padding: 10px;">
                 <p style="font-size:1.3rem; margin-bottom:20px;">Mise úspěšně dokončena!</p>
                 <div style="background:var(--black); color:var(--turquoise); padding:15px; border-radius:15px; font-weight:bold; margin-bottom:20px;">
-                    VÁŠ ČAS: ${diffMins} min a ${diffSecs} s
+                    CELKOVÝ ČAS: ${diffMins} min a ${diffSecs} s
                 </div>
                 <p>Ukažte tento displej instruktorovi a odevzdejte poznámkový bloček.</p>
             </div>`;
@@ -134,7 +194,7 @@ function updateUI() {
     let interakceHtml = "";
 
     if (fazaCesty) {
-        // FÁZE 1: CESTA (Skryté info)
+        // FÁZE 1: CESTA + OKAMŽITÉ LUŠTĚNÍ
         document.getElementById('locationName').innerText = "Místo je skryto...";
         document.getElementById('title').innerText = "Kde je další cíl?";
         
@@ -143,17 +203,23 @@ function updateUI() {
                 <span class="ukol-ruzove">Šifra / Indicie:</span>
                 <p>${st.cestaText}</p>
             </div>
+            
+            <div class="answer-box" style="background: #fff0f6; border-color: var(--pink);">
+                <label style="color: var(--black);">Víte přesně kam jít? Zadejte heslo/místo:</label>
+                <input type="text" id="routePassword" placeholder="Napište cíl..." style="font-size: 1.2rem; text-transform: none;">
+                <button onclick="zkusOdemknoutHeslem()" style="background: var(--pink); color: white; border: 2px solid var(--black); padding: 8px 15px; border-radius: 20px; font-weight: bold; margin-top: 10px; cursor: pointer; width: 100%; font-family: sans-serif; text-transform: uppercase; font-size: 0.8rem;">Odemknout hned 🔓</button>
+            </div>
+
             <div id="timer-display" class="timer-style">Načítání časovače...</div>
             <button id="btn-arrived" onclick="jsmeNaMiste()" class="btn-arrived-style" style="display:none;">UŽ JSME NA MÍSTĚ! 📍</button>
         `;
         contentDiv.innerHTML = interakceHtml;
         actionArea.innerHTML = ""; 
         
-        // SPUŠTĚNÍ ODPOČTU: 180 sekund = 3 minuty. (Pro testy můžeš změnit na 5)
-        startTimer(180);
+        startTimer(180); // 3 minuty standardní čekání
 
     } else {
-        // FÁZE 2: ÚKOL (Odemčeno)
+        // FÁZE 2: ÚKOL (Zůstává beze změn)
         document.getElementById('locationName').innerText = st.l;
         document.getElementById('title').innerText = st.n;
         
@@ -171,7 +237,7 @@ function updateUI() {
                     <p>Pořiďte záznam a nahrajte soubor sem:</p>
                     <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT SOUBOR 📸</a>
                 </div>`;
-            if (st.reseni) { // Pokud má média úkol ještě dodatečnou otázku (Pepík úhoř)
+            if (st.reseni) { 
                 interakceHtml += `
                     <div class="answer-box" style="margin-top:15px;">
                         <label>Otázka: Kolikátý maskot (úhoř) to je?</label>
@@ -179,7 +245,6 @@ function updateUI() {
                     </div>`;
             }
         } else if (st.typ === "smenarny") {
-            // Speciální dynamická tabulka pro 5. stanoviště
             interakceHtml = `
                 <div class="exchange-table-box">
                     <table class="exchange-table">
@@ -221,12 +286,11 @@ function jsmeNaMiste() {
 }
 
 /**
- * 6. KONTROLA ÚSPĚŠNOSTI A POSTUP
+ * 7. KONTROLA ÚSPĚŠNOSTI A POSTUP
  */
 function nextStep() {
     const st = teamRoute[currentStepIndex];
     
-    // Kontrola běžného čísla (či doplňující otázky u médií)
     if (st.typ === "cislo" || (st.typ === "media" && st.reseni)) {
         const userVal = document.getElementById('userAnswer').value;
         if (parseInt(userVal) !== st.reseni) {
@@ -235,12 +299,10 @@ function nextStep() {
         }
     }
 
-    // Kontrola nahraných médií
     if (st.typ === "media") {
         if (!confirm("Máte soubor úspěšně nahraný v albu?")) return;
     }
 
-    // Kontrola vyplnění celé tabulky směnáren
     if (st.typ === "smenarny") {
         const fields = ['eurMax', 'usdMax', 'eurMin', 'usdMin', 'eurAvg', 'usdAvg'];
         for (let id of fields) {
@@ -261,8 +323,8 @@ function nextStep() {
 }
 
 /**
- * 7. INICIALIZACE HRY PŘI NAČTENÍ
+ * 8. SPUŠTĚNÍ HRY
  */
-startTime = new Date(); // Spustíme stopky
+spustCelkovyCasovac(); 
 teamRoute = generujChaotickouTrasu(teamId);
 updateUI();

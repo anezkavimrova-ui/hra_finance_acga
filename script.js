@@ -1,7 +1,5 @@
 /**
  * 1. KONFIGURACE STANOVIŠŤ
- * U některých stanovišť je nyní pole 'heslo' polem textů (Array), 
- * aby hra uznala více správných odpovědí (např. zkratku i plný název).
  */
 const vsechnaStanoviste = [
     { 
@@ -10,8 +8,8 @@ const vsechnaStanoviste = [
         cestaText: "Zadejte do mapy tyto souřadnice a dorazte na místo: 50.0870536N, 14.4286689E",
         t: "Úkol: Spočítejte, kolik vajec je ve čtvrtém sloupci zleva. Na recepci si nechte dát razítko do notýsku.",
         typ: "cislo",
-        reseni: 4, // TODO: Sem pak napiš správné číslo
-        heslo: ["cnb", "ceska narodni banka"] // Uzná ČNB i Česká národní banka
+        reseni: 4, 
+        heslo: ["cnb", "ceska narodni banka"] 
     },
     { 
         n: "Česká minovna", 
@@ -20,7 +18,7 @@ const vsechnaStanoviste = [
         t: "Doufám, že jste u České mincovny!<br><br>Úkol: Najděte ve výloze minci s nejvyšší nominální hodnotou a zadejte její částku v Kč.",
         typ: "cislo",
         reseni: 200,
-        heslo: ["mincovna", "ceska mincovna"] // Uzná Mincovna i Česká mincovna
+        heslo: ["mincovna", "ceska mincovna"] 
     },
     { 
         n: "Generali Česká pojišťovna (Úhoři)", 
@@ -29,8 +27,8 @@ const vsechnaStanoviste = [
         t: "Doufám, že jste ve Spálené ulici u České pojišťovny!<br><br>Úkol: Natočte krátkou reportáž o historii budovy a její funkci. V reportáži se také objeví krátká historie úhořů v budově. Video nahrajte přes tlačítko níže.",
         typ: "media",
         link: "https://drive.google.com/drive/folders/1xSLI55_cf8s9CAT7Hcd8Wl1V-1_04CE1?usp=sharing",
-        reseni: 3, // 
-        heslo: ["pojistovna", "ceska pojistovna"] // Uzná Pojišťovna i Česká pojišťovna
+        reseni: 3, 
+        heslo: ["pojistovna", "ceska pojistovna"] 
     },
     { 
         n: "Komerční banka", 
@@ -39,16 +37,26 @@ const vsechnaStanoviste = [
         t: "Doufám, že stojíte před správnou bankou!<br><br>Úkol: Zjistěte, kvůli čemu nejčastěji lidé přicházejí na pobočku a co nelze vyřešit v mobilní aplikaci. V bance z bezpečnostních důvodů NENATÁČEJTE. Odpověď si zapište do notýsku a nechte si přes ni dát na pobočce razítko. Fotografii této stránky s razítkem a odpovědí nahrajte přes tlačítko níže.",
         typ: "media",
         link: "https://drive.google.com/drive/folders/1HuVArd8cLJr5S5QqOYDjPCnFRFKAnrla?usp=sharing",
-        heslo: ["kb", "komercni banka"] // Uzná KB i Komerční banka
+        heslo: ["kb", "komercni banka"] 
     },
-{ 
+    { 
         n: "Směnárny (Celetná ulice)", 
         l: "Celetná (u Karolina)", 
         cestaText: "Zjistěte, ve které ulici se nachází Knihkupectví Karolinum. Právě tam totiž míříte!",
         t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty a vyfotit a nahrát hotovou statistiku z notýsku přes tlačítko níže!",
         typ: "smenarny_media",
-        link: "https://drive.google.com/drive/folders/1Rz4vZQO1rsPmvWCK9uiKGdnQ2m3dxt5s?usp=sharing", // Sem vlož svůj odkaz pro směnárny
+        link: "https://drive.google.com/drive/folders/1xSLI55_cf8s9CAT7Hcd8Wl1V-1_04CE1?usp=sharing", 
         heslo: "celetna"
+    },
+    {
+        n: "Pařížská ulice (Sny vs. Realita)",
+        l: "Pařížská ulice",
+        cestaText: "Míříte do ulice, kde se za výlohami nelesknou obyčejné věci, ale sny milionářů. Tato ulice nese název hlavního města módy a začíná u paty starobylého Josefova. Vaším cílem je projít ji a najít ten nejdražší vystavený kousek zboží s jasnou cenovkou.",
+        t: "Vítejte v Pařížské!<br><br> Najděte nejdražší kousek zboží s uvedenou cenou. Do notýsku si zapište název obchodu, o jaké zboží šlo a jeho cenu.<br><br>Úkol 2: Následně v notýsku spočítejte, kolik **celých měsíčních platů** by na něj musel čistého spořit průměrný učitel v Praze.<br><br><strong>Podmínky výpočtu:</strong><br>• Průměrný čistý plat učitele v Praze: <strong>zjistěte a uveďte zdroj</strong><br>• Průměrné měsíční náklady na život v Praze: <strong>odhadněte a nebo zjistěte a uveďte zdroj</strong><br>• Inflaci ani změnu mzdy neuvažujte.<br><br>Celou tuto analýzu vyfoťte a nahrajte na Disk. **Abyste mohli jít dál, zjistěte a zadejte odpověď na otázku níže!**",
+        typ: "parizska_kviz",
+        link: "https://drive.google.com/drive/folders/1Q5dioE4anGEwjeKcqzwPKPDMsdDpM0Sz?usp=sharing",
+        reseni: ["hermes", "hermes praha"]
+        heslo: ["parizska", "parizska ulice"]
     }
 ];
 
@@ -79,7 +87,7 @@ function generujChaotickouTrasu(id) {
 }
 
 /**
- * 4. HORNÍ ČASOVAČ (Běží po celou dobu hry)
+ * 4. HORNÍ ČASOVAČ
  */
 function spustCelkovyCasovac() {
     startTime = new Date();
@@ -108,7 +116,7 @@ function spustCelkovyCasovac() {
 }
 
 /**
- * 5. ČASOVAČ NA STANOVIŠTI (3 MINUTY ČEKÁNÍ)
+ * 5. ČASOVAČ NA STANOVIŠTI
  */
 function startTimer(durationSeconds) {
     clearInterval(timerInterval);
@@ -135,33 +143,24 @@ function startTimer(durationSeconds) {
     }, 1000);
 }
 
-/**
- * OŠETŘENÍ TEXTU (Odstraní diakritiku a velká písmena pro snadnější shodu hesel)
- */
 function normalizujText(text) {
     return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 }
 
-/**
- * EXPRESNÍ ODEMČENÍ POMOCÍ HESLA
- */
 function zkusOdemknoutHeslem() {
     const st = teamRoute[currentStepIndex];
     const vlozeneHeslo = normalizujText(document.getElementById('routePassword').value);
     
     let spravne = false;
-    
-    // Pokud máme pro stanoviště seznam více hesel (Array)
     if (Array.isArray(st.heslo)) {
         spravne = st.heslo.some(h => normalizujText(h) === vlozeneHeslo);
     } else {
-        // Pokud je tam jen jeden textový řetězec
         spravne = normalizujText(st.heslo) === vlozeneHeslo;
     }
     
     if (spravne) {
-        clearInterval(timerInterval); // Zrušíme odpočet na místě
-        fazaCesty = false; // Skočíme na úkol
+        clearInterval(timerInterval); 
+        fazaCesty = false; 
         updateUI();
     } else {
         alert("❌ Nesprávné heslo lokality. Zkuste to znovu nebo počkejte na vypršení časovače.");
@@ -206,7 +205,6 @@ function updateUI() {
     let interakceHtml = "";
 
     if (fazaCesty) {
-        // FÁZE 1: CESTA + OKAMŽITÉ LUŠTĚNÍ
         document.getElementById('locationName').innerText = "Místo je skryto...";
         document.getElementById('title').innerText = "Kde je další cíl?";
         
@@ -215,27 +213,23 @@ function updateUI() {
                 <span class="ukol-ruzove">Šifra / Indicie:</span>
                 <p>${st.cestaText}</p>
             </div>
-            
             <div class="answer-box" style="background: #fff0f6; border-color: var(--pink);">
                 <label style="color: var(--black);">Víte přesně kam jít? Zadejte heslo/místo:</label>
                 <input type="text" id="routePassword" placeholder="Napište cíl..." style="font-size: 1.2rem; text-transform: none;">
                 <button onclick="zkusOdemknoutHeslem()" style="background: var(--pink); color: white; border: 2px solid var(--black); padding: 8px 15px; border-radius: 20px; font-weight: bold; margin-top: 10px; cursor: pointer; width: 100%; font-family: sans-serif; text-transform: uppercase; font-size: 0.8rem;">Odemknout hned 🔓</button>
             </div>
-
             <div id="timer-display" class="timer-style">Načítání časovače...</div>
             <button id="btn-arrived" onclick="jsmeNaMiste()" class="btn-arrived-style" style="display:none;">UŽ JSME NA MÍSTĚ! 📍</button>
         `;
         contentDiv.innerHTML = interakceHtml;
         actionArea.innerHTML = ""; 
-        
-        startTimer(180); // 3 minuty standardní čekání
+        startTimer(180); 
 
     } else {
-        // FÁZE 2: ÚKOL
         document.getElementById('locationName').innerText = st.l;
         document.getElementById('title').innerText = st.n;
         
-        let formattedText = st.t.replace("Úkol:", "<span class='ukol-ruzove'>Úkol:</span>");
+        let formattedText = st.t.replace("Úkol 1:", "<span class='ukol-ruzove'>Úkol 1:</span>").replace("Úkol 2:", "<span class='ukol-ruzove'>Úkol 2:</span>");
         
         if (st.typ === "cislo") {
             interakceHtml = `
@@ -256,61 +250,29 @@ function updateUI() {
                         <input type="number" id="userAnswer" placeholder="0">
                     </div>`;
             }
-        } else if (st.typ === "smenarny") {
-            interakceHtml = `
-                <div class="exchange-table-box">
-                    <table class="exchange-table">
-                        <tr>
-                            <th>Statistika</th>
-                            <th>Euro (EUR)</th>
-                            <th>Dolar (USD)</th>
-                        </tr>
-                        <tr>
-                            <td><strong>MAXIMUM</strong></td>
-                            <td><input type="number" step="0.01" id="eurMax" placeholder="0.00"></td>
-                            <td><input type="number" step="0.01" id="usdMax" placeholder="0.00"></td>
-                        </tr>
-                        <tr>
-                            <td><strong>MINIMUM</strong></td>
-                            <td><input type="number" step="0.01" id="eurMin" placeholder="0.00"></td>
-                            <td><input type="number" step="0.01" id="usdMin" placeholder="0.00"></td>
-                        </tr>
-                        <tr>
-                            <td><strong>PRŮMĚR</strong></td>
-                            <td><input type="number" step="0.01" id="eurAvg" placeholder="0.00"></td>
-                            <td><input type="number" step="0.01" id="usdAvg" placeholder="0.00"></td>
-                        </tr>
-                    </table>
-                </div>`;
         } else if (st.typ === "smenarny_media") {
             interakceHtml = `
                 <div class="exchange-table-box">
                     <table class="exchange-table">
-                        <tr>
-                            <th>Statistika</th>
-                            <th>Euro (EUR)</th>
-                            <th>Dolar (USD)</th>
-                        </tr>
-                        <tr>
-                            <td><strong>MAXIMUM</strong></td>
-                            <td><input type="number" step="0.01" id="eurMax" placeholder="0.00"></td>
-                            <td><input type="number" step="0.01" id="usdMax" placeholder="0.00"></td>
-                        </tr>
-                        <tr>
-                            <td><strong>MINIMUM</strong></td>
-                            <td><input type="number" step="0.01" id="eurMin" placeholder="0.00"></td>
-                            <td><input type="number" step="0.01" id="usdMin" placeholder="0.00"></td>
-                        </tr>
-                        <tr>
-                            <td><strong>PRŮMĚR</strong></td>
-                            <td><input type="number" step="0.01" id="eurAvg" placeholder="0.00"></td>
-                            <td><input type="number" step="0.01" id="usdAvg" placeholder="0.00"></td>
-                        </tr>
+                        <tr><th>Statistika</th><th>Euro (EUR)</th><th>Dolar (USD)</th></tr>
+                        <tr><td><strong>MAXIMUM</strong></td><td><input type="number" step="0.01" id="eurMax" placeholder="0.00"></td><td><input type="number" step="0.01" id="usdMax" placeholder="0.00"></td></tr>
+                        <tr><td><strong>MINIMUM</strong></td><td><input type="number" step="0.01" id="eurMin" placeholder="0.00"></td><td><input type="number" step="0.01" id="usdMin" placeholder="0.00"></td></tr>
+                        <tr><td><strong>PRŮMĚR</strong></td><td><input type="number" step="0.01" id="eurAvg" placeholder="0.00"></td><td><input type="number" step="0.01" id="usdAvg" placeholder="0.00"></td></tr>
                     </table>
                 </div>
                 <div class="media-box" style="margin-top: 20px;">
                     <p>Vyfoťte statistiku zapsanou v notýsku a nahrajte ji sem:</p>
                     <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT STATISTIKU 📸</a>
+                </div>`;
+        } else if (st.typ === "parizska_kviz") {
+            interakceHtml = `
+                <div class="media-box">
+                    <p>1. Nahrajte fotografii vypracované analýzy z notýsku:</p>
+                    <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT ANALÝZU NA DISK 📸</a>
+                </div>
+                <div class="answer-box" style="margin-top: 20px;">
+                    <label><strong>Kontrolní otázka pro postup dál:</strong><br>Která světová módní značka otevřela v Pařížské ulici svůj luxusní butik jako úplně první a funguje zde nejdéle?</label>
+                    <input type="text" id="quizAnswer" placeholder="Napište název značky...">
                 </div>`;
         }
 
@@ -345,16 +307,6 @@ function nextStep() {
         if (!confirm("Máte soubor úspěšně nahraný v albu?")) return;
     }
 
-    if (st.typ === "smenarny") {
-        const fields = ['eurMax', 'usdMax', 'eurMin', 'usdMin', 'eurAvg', 'usdAvg'];
-        for (let id of fields) {
-            const val = parseFloat(document.getElementById(id).value);
-            if (isNaN(val) || val <= 0) {
-                alert("❌ Musíte vyplnit všechna políčka tabulky platnými kurzy!");
-                return;
-            }
-        }
-    }
     if (st.typ === "smenarny_media") {
         const fields = ['eurMax', 'usdMax', 'eurMin', 'usdMin', 'eurAvg', 'usdAvg'];
         for (let id of fields) {
@@ -365,6 +317,15 @@ function nextStep() {
             }
         }
         if (!confirm("Nahráli jste fotografii statistiky z notýsku do sdíleného alba?")) return;
+    }
+
+    if (st.typ === "parizska_kviz") {
+        const odpoved = normalizujText(document.getElementById('quizAnswer').value);
+        if (odpoved !== "hermes" && odpoved !== "hermes praha") {
+            alert("❌ Nesprávná odpověď na kontrolní otázku! Zkuste to znovu nebo zařaďte lepší googlení.");
+            return;
+        }
+        if (!confirm("Ověření úspěšné! Máte fotografii analýzy z notýsku skutečně nahranou na Disku?")) return;
     }
 
     if (confirm("Máte vše splněno a zapsáno v bločku? Pokračovat dál?")) {

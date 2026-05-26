@@ -1,6 +1,7 @@
 /**
  * 1. KONFIGURACE STANOVIŠŤ
- * Kód obsahuje novou položku 'heslo' pro okamžité přeskočení 3minutové čekací doby.
+ * U některých stanovišť je nyní pole 'heslo' polem textů (Array), 
+ * aby hra uznala více správných odpovědí (např. zkratku i plný název).
  */
 const vsechnaStanoviste = [
     { 
@@ -10,7 +11,7 @@ const vsechnaStanoviste = [
         t: "Úkol: Spočítejte, kolik vajec je ve čtvrtém sloupci zleva. Na recepci si nechte dát největší možné razítko do kartičky.",
         typ: "cislo",
         reseni: 12, // TODO: Sem pak napiš správné číslo
-        heslo: "cnb" // Akceptuje cnb, ČNB, Čnb...
+        heslo: ["cnb", "ceska narodni banka"] // Uzná ČNB i Česká národní banka
     },
     { 
         n: "Česká minovna", 
@@ -19,7 +20,7 @@ const vsechnaStanoviste = [
         t: "Doufám, že jste u České mincovny!<br><br>Úkol: Najděte ve výloze minci s nejvyšší nominální hodnotou a zadejte její částku v Kč.",
         typ: "cislo",
         reseni: 200,
-        heslo: "mincovna" // Akceptuje mincovna, Mincovna...
+        heslo: ["mincovna", "ceska mincovna"] // Uzná Mincovna i Česká mincovna
     },
     { 
         n: "Generali Česká pojišťovna (Úhoři)", 
@@ -27,18 +28,18 @@ const vsechnaStanoviste = [
         cestaText: "Míříte na místo, kde i pojišťováci mají svého maskota, který nepotřebuje oblek, ale vodu. Jmenuje se Pepík.",
         t: "Doufám, že jste ve Spálené ulici u České pojišťovny!<br><br>Úkol: Natočte krátkou reportáž o historii budovy a její funkci. V reportáži se také objeví krátká historie úhořů v budově. Video nahrajte přes tlačítko níže.",
         typ: "media",
-        link: "https://photos.app.goo.gl/vase-album",
+        link: "https://drive.google.com/drive/folders/1xSLI55_cf8s9CAT7Hcd8Wl1V-1_04CE1?usp=sharing",
         reseni: 3, // TODO: Zjistit, kolikátý úhoř to je
-        heslo: "pojišťovna" // Akceptuje pojišťovna, pojistovna, POJIŠŤOVNA... (diakritiku skript ošetří)
+        heslo: ["pojistovna", "ceska pojistovna"] // Uzná Pojišťovna i Česká pojišťovna
     },
     { 
         n: "Komerční banka", 
         l: "Spálená 51 (pobočka v centru)", 
         cestaText: "Zadejte do mapy tyto souřadnice a vyrazte na další místo: 50.0816983N, 14.4192744E",
-        t: "Doufám, že stojíte před správnou bankou!<br><br>Úkol: Zjistěte, kvůli čemu nejčastěji lidé přicházejí na pobočku a co nelze vyřešit v mobilní aplikaci. V bance z bezpečnostních důvodů NENATÁČEJTE. Odpověď si zapište do notýsku a nechte si přes ni dát na pobočce razítko. Fotografii této stránky s razítkem and odpovědí nahrajte přes tlačítko níže.",
+        t: "Doufám, že stojíte před správnou bankou!<br><br>Úkol: Zjistěte, kvůli čemu nejčastěji lidé přicházejí na pobočku a co nelze vyřešit v mobilní aplikaci. V bance z bezpečnostních důvodů NENATÁČEJTE. Odpověď si zapište do notýsku a nechte si přes ni dát na pobočce razítko. Fotografii této stránky s razítkem a odpovědí nahrajte přes tlačítko níže.",
         typ: "media",
-        link: "https://photos.app.goo.gl/vase-album",
-        heslo: "kb" // Akceptuje kb, KB...
+        link: "https://drive.google.com/drive/folders/1HuVArd8cLJr5S5QqOYDjPCnFRFKAnrla?usp=sharing",
+        heslo: ["kb", "komercni banka"] // Uzná KB i Komerční banka
     },
     { 
         n: "Směnárny (Celetná ulice)", 
@@ -46,7 +47,7 @@ const vsechnaStanoviste = [
         cestaText: "Zjistěte, ve které ulici se nachází Knihkupectví Karolinum. Právě tam totiž míříte!",
         t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty!",
         typ: "smenarny",
-        heslo: "celetná" // Akceptuje celetna, Celetná...
+        heslo: "celetna"
     }
 ];
 
@@ -141,13 +142,23 @@ function normalizujText(text) {
 }
 
 /**
- * EXPERSNÍ ODEMČENÍ POMOCÍ HESLA
+ * EXPRESNÍ ODEMČENÍ POMOCÍ HESLA
  */
 function zkusOdemknoutHeslem() {
     const st = teamRoute[currentStepIndex];
-    const vlozeneHeslo = document.getElementById('routePassword').value;
+    const vlozeneHeslo = normalizujText(document.getElementById('routePassword').value);
     
-    if (normalizujText(vlozeneHeslo) === normalizujText(st.heslo)) {
+    let spravne = false;
+    
+    // Pokud máme pro stanoviště seznam více hesel (Array)
+    if (Array.isArray(st.heslo)) {
+        spravne = st.heslo.some(h => normalizujText(h) === vlozeneHeslo);
+    } else {
+        // Pokud je tam jen jeden textový řetězec
+        spravne = normalizujText(st.heslo) === vlozeneHeslo;
+    }
+    
+    if (spravne) {
         clearInterval(timerInterval); // Zrušíme odpočet na místě
         fazaCesty = false; // Skočíme na úkol
         updateUI();
@@ -219,7 +230,7 @@ function updateUI() {
         startTimer(180); // 3 minuty standardní čekání
 
     } else {
-        // FÁZE 2: ÚKOL (Zůstává beze změn)
+        // FÁZE 2: ÚKOL
         document.getElementById('locationName').innerText = st.l;
         document.getElementById('title').innerText = st.n;
         

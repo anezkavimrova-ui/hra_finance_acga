@@ -240,13 +240,13 @@ function updateUI() {
         if (st.typ === "cislo") {
             interakceHtml = `
                 <div class="answer-box">
-                    <label>Zadej číselný výsledek:</label>
+                    <label>Zadejte číselný výsledek:</label>
                     <input type="number" id="userAnswer" placeholder="0">
                 </div>`;
         } else if (st.typ === "media") {
             interakceHtml = `
                 <div class="media-box">
-                    <p>Pořiďte záznam a nahrajte soubor sem:</p>
+                    <p>Pořiďte záznam/fotografii a nahrajte soubor sem:</p>
                     <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT SOUBOR 📸</a>
                 </div>`;
             if (st.reseni) { 

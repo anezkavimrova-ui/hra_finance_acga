@@ -52,10 +52,10 @@ const vsechnaStanoviste = [
         n: "Pařížská ulice (Sny vs. Realita)",
         l: "Pařížská ulice",
         cestaText: "Míříte do ulice, kde se za výlohami nelesknou obyčejné věci, ale sny milionářů. Tato ulice nese název hlavního města módy a začíná u paty starobylého Josefova. Vaším cílem je projít ji a najít ten nejdražší vystavený kousek zboží s jasnou cenovkou.",
-        t: "Vítejte v Pařížské!<br><br> Najděte nejdražší kousek zboží s uvedenou cenou. Do notýsku si zapište název obchodu, o jaké zboží šlo a jeho cenu.<br><br>Úkol 2: Následně v notýsku spočítejte, kolik **celých měsíčních platů** by na něj musel čistého spořit průměrný učitel v Praze.<br><br><strong>Podmínky výpočtu:</strong><br>• Průměrný čistý plat učitele v Praze: <strong>zjistěte a uveďte zdroj</strong><br>• Průměrné měsíční náklady na život v Praze: <strong>odhadněte a nebo zjistěte a uveďte zdroj</strong><br>• Inflaci ani změnu mzdy neuvažujte.<br><br>Celou tuto analýzu vyfoťte a nahrajte na Disk. **Abyste mohli jít dál, zjistěte a zadejte odpověď na otázku níže!**",
+        t: "Vítejte v Pařížské!<br><br>Úkol 1: Najděte nejdražší kousek zboží s uvedenou cenou. Do notýsku si zapište název obchodu, o jaké zboží šlo a jeho cenu.<br><br>Úkol 2: Následně v notýsku spočítejte, kolik **celých měsíčních platů** by na něj musel čistého spořit průměrný učitel v Praze.<br><br><strong>Podmínky výpočtu:</strong><br>• Průměrný čistý plat učitele v Praze: <strong>52 000 Kč</strong><br>• Průměrné měsíční náklady na život v Praze: <strong>32 000 Kč</strong><br>• Inflaci ani změnu mzdy neuvažujte.<br><br>Celou tuto analýzu vyfoťte a nahrajte na Disk. **Abyste mohli jít dál, zjistěte a zadejte odpověď na otázku níže!**",
         typ: "parizska_kviz",
         link: "https://drive.google.com/drive/folders/1Q5dioE4anGEwjeKcqzwPKPDMsdDpM0Sz?usp=sharing",
-        reseni: ["hermes", "hermes praha"]
+        reseni: ["hermes", "hermes praha"],
         heslo: ["parizska", "parizska ulice"]
     }
 ];
@@ -271,7 +271,7 @@ function updateUI() {
                     <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT ANALÝZU NA DISK 📸</a>
                 </div>
                 <div class="answer-box" style="margin-top: 20px;">
-                    <label><strong>Kontrolní otázka pro postup dál:</strong><br>Která světová módní značka otevřela v Pařížské ulici svůj luxusní butik jako úplně první a funguje zde nejdéle?</label>
+                    <label><strong>Kontrolní otázka pro postup dál:</strong><br>Která světová módní značka otevřela v Pařížské ulici svůj luxusní butik jako úplně první (už v roce 1997) a funguje zde nejdéle?</label>
                     <input type="text" id="quizAnswer" placeholder="Napište název značky...">
                 </div>`;
         }
@@ -295,7 +295,7 @@ function jsmeNaMiste() {
 function nextStep() {
     const st = teamRoute[currentStepIndex];
     
-    if (st.typ === "cislo" || (st.typ === "media" && st.reseni)) {
+    if (st.typ === "cislo" || (st.typ === "media" && st.reseni && typeof st.reseni === "number")) {
         const userVal = document.getElementById('userAnswer').value;
         if (parseInt(userVal) !== st.reseni) {
             alert("❌ Špatný výsledek! Zkuste to znovu.");
@@ -321,7 +321,9 @@ function nextStep() {
 
     if (st.typ === "parizska_kviz") {
         const odpoved = normalizujText(document.getElementById('quizAnswer').value);
-        if (odpoved !== "hermes" && odpoved !== "hermes praha") {
+        const jeSpravne = st.reseni.some(r => normalizujText(r) === odpoved);
+        
+        if (!jeSpravne) {
             alert("❌ Nesprávná odpověď na kontrolní otázku! Zkuste to znovu nebo zařaďte lepší googlení.");
             return;
         }

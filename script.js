@@ -6,7 +6,7 @@ const vsechnaStanoviste = [
         n: "Česká národní banka", 
         l: "Na Příkopě 28", 
         cestaText: "Zadejte do mapy tyto souřadnice a dorazte na místo: 50.0870536N, 14.4286689E",
-        t: "Úkol: Spočítejte, kolik vajec je ve čtvrtém sloupci zleva. Na recepci si nechte dát razítko do notýsku.",
+        t: "Úkol: Podívejte se na interaktivní graf ve výloze (viz foto níže). Vaším úkolem je spočítat, kolik symbolů vajec se nachází přesně ve ČTVRTÉM sloupci zleva (období 1935–1939). Pozor, počítejte pouze celá a viditelná vejce v tomto sloupci!<br><br><img src='1000022677.jpg' alt='Graf ČNB' style='width:100%; max-width:400px; border-radius:10px; border:2px solid var(--black); margin-top:10px;'>",
         typ: "cislo",
         link: "",
         reseni: 4, 
@@ -14,9 +14,9 @@ const vsechnaStanoviste = [
     },
     { 
         n: "Česká minovna", 
-        l: "Havířská 3", 
-        cestaText: "Najděte budovu, v jejíž blízkosti se nachází socha muže bez tváře. V její výloze dnes uvidíte víc stříbra než v celém bločku vašich poznámek. Úkol začíná u skla, za kterým se leskne pětikilo, které byste v automatu na kávu neudali.",
-        t: "Doufám, že jste u České mincovny!<br><br>Úkol: Najděte ve výloze minci s nejvyšší nominální hodnotou a zadejte její částku v Kč.",
+        l: "Na Příkopě 24 (Pasáž ČNB)", 
+        cestaText: "Míříte na ulici, která byla dlouhou dobu tou vůbec nejdražší ulicí v celé Praze. Vaším hlavním orientačním bodem bude prodejna legendárních českých tužek a pastelek Koh-i-Noor. Jakmile ji najdete, vejděte do pasáže přímo naproti ní a hledejte výlohu plnou drahých kovů, zlatých investičních slitků a pamětních mincí.",
+        t: "Doufám, že stojíte u výlohy České mincovny!<br><br>Úkol: Pořádně si prohlédněte vystavené kousky. Najděte minci s tou úplně nejvyšší nominální hodnotou (částkou v Kč) a zadejte ji jako výsledek.",
         typ: "cislo",
         link: "",
         reseni: 200,
@@ -33,30 +33,20 @@ const vsechnaStanoviste = [
         heslo: ["pojistovna", "ceska pojistovna"] 
     },
     { 
-        n: "Komerční banka", 
-        l: "Spálená 51 (pobočka v centru)", 
-        cestaText: "Zadejte do mapy tyto souřadnice a vyrazte na další místo: 50.0816983N, 14.4192744E",
-        t: "Doufám, že stojíte před správnou bankou!<br><br>Úkol: Zjistěte, kvůli čemu nejčastěji lidé přicházejí na pobočku a co nelze vyřešit v mobilní aplikaci. V bance z bezpečnostních důvodů NENATÁČEJTE. Odpověď si zapište do notýsku a nechte si přes ni dát na pobočce razítko. Fotografii této stránky s razítkem a odpovědí nahrajte přes tlačítko níže.",
-        typ: "media",
-        link: "https://drive.google.com/drive/folders/1HuVArd8cLJr5S5QqOYDjPCnFRFKAnrla?usp=sharing",
-        reseni: 0,
-        heslo: ["kb", "komercni banka"] 
-    },
-    { 
         n: "Směnárny (Celetná ulice)", 
         l: "Celetná (u Karolina)", 
         cestaText: "Zjistěte, ve které ulici se nachází Knihkupectví Karolinum. Právě tam totiž míříte!",
-        t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty a vyfotit a nahrát hotovou statistiku z notýsku přes tlačítko níže!",
+        t: "Doufám, že jste na správné ulici!<br><br>Úkol: Proveďte průzkum v 5 směnárnách na této ulici. U každé z nich zjistěte jejich aktuální kurz pro NÁKUP českých korun (We Buy) za 1 EUR a 1 USD. Výsledky statisticky zpracujte do tabulky níže. Pro postup dál musíte poctivě vyplnit všechny hodnoty a vyfotit a nahrát hotovou statistiku ze svých materiálů přes tlačítko níže!",
         typ: "smenarny_media",
         link: "https://drive.google.com/drive/folders/1xSLI55_cf8s9CAT7Hcd8Wl1V-1_04CE1?usp=sharing", 
         reseni: 0,
         heslo: "celetna"
     },
     {
-        n: "Pařížská ulice (Sny vs. Realita)",
+        n: "Pařížská ulice (Vogue výzva)",
         l: "Pařížská ulice",
-        cestaText: "Míříte do ulice, kde se za výlohami nelesknou obyčejné věci, ale sny milionářů. Tato ulice nese název hlavního města módy a začíná u paty starobylého Josefova. Vaším cílem je projít ji a najít ten nejdražší vystavený kousek zboží s jasnou cenovkou.",
-        t: "Vítejte v Pařížské!<br><br> Najděte nejdražší kousek zboží s uvedenou cenou. Do notýsku si zapište název obchodu, o jaké zboží šlo a jeho cenu.<br><br> Následně v notýsku spočítejte, kolik **celých měsíčních platů** by na něj musel čistého spořit průměrný učitel v Praze.<br><br><strong>Podmínky výpočtu:</strong><br>• Průměrný čistý plat učitele v Praze: <strong>zjistěte a uveďte zdroj</strong><br>• Průměrné měsíční náklady na život v Praze: <strong>zjistěte a uveďte zdroj</strong><br>• Inflaci ani změnu mzdy neuvažujte.<br><br>Celou tuto analýzu vyfoťte a nahrajte na Disk. **Abyste mohli jít dál, zjistěte a zadejte odpověď na otázku níže!**",
+        cestaText: "Míříte do ulice, která nese název hlavního města módy, začíná u paty starobylého Josefova a byla dlouho považována za nejdražší adresu v Česku.",
+        t: "Vítejte v Pařížské!<br><br>Výlohy zdejších obchodů navrhují ti nejlepší designéři na světě. Využijte toho!<br><br>Úkol: Projděte ulici, vyberte si výlohu nebo vstup do butiku, který na vás působí nejvíc luxusně, a udělejte před ním společnou týmovou fotku. Podmínka: Žádný nudný školní skupinkový snímek – zatvorte se jako modelové na obálku módního časopisu! Fotku nahrajte na Disk přes tlačítko níže.<br><br><strong>Kontrolní otázka pro postup dál:</strong> Která světová módní značka otevřela v Pařížské ulici svůj luxusní butik jako úplně první (už v roce 1997) a funguje zde nejdéle?",
         typ: "parizska_kviz",
         link: "https://drive.google.com/drive/folders/1Q5dioE4anGEwjeKcqzwPKPDMsdDpM0Sz?usp=sharing",
         reseni: ["hermes", "hermes praha"],
@@ -78,16 +68,28 @@ const params = new URLSearchParams(window.location.search);
 const teamId = parseInt(params.get('team')) || 1;
 
 /**
- * 3. LOGIKA MÍCHÁNÍ TRASY
+ * 3. LOGIKA GEOGRAFICKÉHO MÍCHÁNÍ TRASY (CHYTRÉ SOUSEDSTVÍ)
  */
 function generujChaotickouTrasu(id) {
-    let trasa = [...vsechnaStanoviste];
+    const blokBanky = [vsechnaStanoviste[0], vsechnaStanoviste[1]]; 
+    const blokCentrum = [vsechnaStanoviste[3], vsechnaStanoviste[4]]; 
+    const mostPojistovna = [vsechnaStanoviste[2]]; 
+
     let seed = id;
-    for (let i = trasa.length - 1; i > 0; i--) {
-        const j = Math.floor((Math.abs(Math.sin(seed++) * 10000)) % (i + 1));
-        [trasa[i], trasa[j]] = [trasa[j], trasa[i]];
+    function random() {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
     }
-    return trasa;
+
+    if (random() > 0.5) blokBanky.reverse();
+    if (random() > 0.5) blokCentrum.reverse();
+
+    const struktura = random() > 0.5 ? [blokBanky, blokCentrum] : [blokCentrum, blokBanky];
+
+    const poziceMostu = Math.floor(random() * 3); 
+    struktura.splice(poziceMostu, 0, mostPojistovna);
+
+    return struktura.flat();
 }
 
 /**
@@ -285,7 +287,7 @@ function updateUI() {
             interakceHtml = `
                 <div class="media-box">
                     <p>1. Nahrajte fotografii vypracované analýzy z notýsku:</p>
-                    <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT ANALÝZU NA DISK 📸</a>
+                    <a href="${st.link}" target="_blank" class="btn-upload">NAHRÁT SOUBOR 📸</a>
                 </div>
                 <div class="answer-box" style="margin-top: 20px;">
                     <label><strong>Kontrolní otázka pro postup dál:</strong><br>Která světová módní značka otevřela v Pařížské ulici svůj luxusní butik jako úplně první (už v roce 1997) a funguje zde nejdéle?</label>
